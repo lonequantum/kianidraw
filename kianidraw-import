@@ -1,0 +1,47 @@
+#!/bin/sh
+PROG_NAME=$(basename $0)
+
+
+exit_bad_location() {
+	echo "$PROG_NAME: not in a valid/usable kianidraw project" >&2
+	exit 1
+}
+
+
+for flag in d r w; do
+	test -$flag .kianidraw || exit_bad_location
+	test -$flag in         || exit_bad_location
+done
+
+move=false
+test X"$1" = X"-m" && {
+	move=true
+	shift
+}
+
+while test $# -ge 1; do
+	test -r "$1" || {
+		echo "$PROG_NAME: '$1' is not a readable file" >&2
+		shift
+		continue
+	}
+
+	sum=$(cksum "$1" | awk '{print $1}')
+	! $(ls in | grep -q $sum) || {
+		echo "$PROG_NAME: warning: '$1' already imported"
+		shift
+		continue
+	}
+
+	new_filename=$(date +%y%m%d%H%M%S)_${sum}_$(basename $1)
+
+	if $move; then
+		mv "$1" in/"$new_filename"
+	else
+		cp "$1" in/"$new_filename"
+	fi
+
+	sleep 1
+	echo "$PROG_NAME: imported '$1'"
+	shift
+done

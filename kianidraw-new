@@ -1,0 +1,12 @@
+#!/bin/sh
+PROG_NAME=$(basename $0)
+
+
+test -n "$1" || {
+	echo "$PROG_NAME: 1 arg required: projectName" >&2
+	exit 64
+}
+
+mkdir -m 711 "$1" || exit 1
+cd "$1"
+mkdir -m 755 .kianidraw in out tmp
