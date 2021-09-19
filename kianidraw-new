@@ -1,5 +1,6 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
+MSG_PREFIX=$PROG_NAME
 
 
 test -n "$1" || {
@@ -9,4 +10,4 @@ test -n "$1" || {
 
 mkdir -m 711 "$1" || exit 1
 cd "$1"
-mkdir -m 755 .kianidraw in out tmp
+mkdir -m 755 .kianidraw in out tmp && echo "$MSG_PREFIX: created project \"$1\""
