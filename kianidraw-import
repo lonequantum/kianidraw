@@ -21,14 +21,14 @@ test X"$1" = X"-m" && {
 
 while test $# -ge 1; do
 	test -r "$1" || {
-		echo "$PROG_NAME: '$1' is not a readable file" >&2
+		echo "$PROG_NAME: \"$1\" is not a readable file" >&2
 		shift
 		continue
 	}
 
 	sum=$(cksum "$1" | awk '{print $1}')
 	! $(ls in | grep -q $sum) || {
-		echo "$PROG_NAME: warning: '$1' already imported"
+		echo "$PROG_NAME: warning: \"$1\" already imported"
 		shift
 		continue
 	}
@@ -42,6 +42,6 @@ while test $# -ge 1; do
 	fi
 
 	sleep 1
-	echo "$PROG_NAME: imported '$1'"
+	echo "$PROG_NAME: imported \"$1\""
 	shift
 done
