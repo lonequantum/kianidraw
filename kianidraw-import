@@ -2,12 +2,10 @@
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 
-
 exit_bad_location() {
 	echo "$PROG_NAME: not in a valid/usable kianidraw project" >&2
 	exit 1
 }
-
 
 for flag in d r w; do
 	test -$flag .kianidraw || exit_bad_location

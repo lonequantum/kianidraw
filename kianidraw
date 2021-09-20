@@ -1,13 +1,11 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
 
-
 command=":"
 add_subcommand() {
 	command="$command && $*"
 	test $1 = kianidraw-new && command="$command && cd $2"
 }
-
 
 subcommand=""
 while test $# -ge 1; do
