@@ -1,7 +1,6 @@
 #!/bin/sh
 INSTALL_DIR=/usr/local/bin
 
-
 test $(id -u) -eq 0 || {
 	echo "permission denied" >&2
 	exit 77
