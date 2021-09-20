@@ -20,34 +20,47 @@ test X"$1" = X"-m" && {
 	shift
 }
 
-test -n "$1" || {
-	echo "$MSG_PREFIX: at least 1 arg required: <file>..." >&2
+test $# -ge 2 && test $(expr $# % 2) -eq 0 || {
+	echo "$MSG_PREFIX: at least 2 args required per imported resource: (<file> <name>)..." >&2
 	exit 64
 }
 
-while test $# -ge 1; do
+while test $# -gt 0; do
 	test -r "$1" || {
-		echo "$MSG_PREFIX: warning: \"$1\" is not a readable file" >&2
-		shift
+		echo "$MSG_PREFIX: warning: \"$1\" is not a readable file => skipped" >&2
+		shift 2
 		continue
 	}
 
 	sum=$(cksum "$1" | awk '{print $1}')
-	! $(ls in | grep -q $sum) || {
-		echo "$MSG_PREFIX: warning: \"$1\" already imported" >&2
-		shift
+	! $(ls -A in | grep -q $sum) || {
+		echo "$MSG_PREFIX: warning: \"$1\" already imported => skipped" >&2
+		shift 2
 		continue
 	}
 
-	new_filename=$(date +%y%m%d%H%M%S)_${sum}_$(basename $1)
+	! expr "$2" : "\." >/dev/null || {
+		echo "$MSG_PREFIX: warning: bad name: \"$2\" => skipped" >&2
+		shift 2
+		continue
+	}
+
+	! test -f in/"$2" || {
+		echo "$MSG_PREFIX: warning: name \"$2\" already in use => skipped" >&2
+		shift 2
+		continue
+	}
+
+	new_filename=.${sum}_$(basename $1)
 
 	if $move; then
 		mv "$1" in/"$new_filename"
 	else
 		cp "$1" in/"$new_filename"
 	fi
+	ln -s "$new_filename" in/"$2"
 
 	sleep 1
-	echo "$MSG_PREFIX: imported \"$1\""
-	shift
+	echo "$MSG_PREFIX: imported \"$1\" as \"$2\""
+	shift 2
 done
