@@ -20,16 +20,21 @@ test X"$1" = X"-m" && {
 	shift
 }
 
+test -n "$1" || {
+	echo "$MSG_PREFIX: at least 1 arg required: file [other files]" >&2
+	exit 64
+}
+
 while test $# -ge 1; do
 	test -r "$1" || {
-		echo "$MSG_PREFIX: \"$1\" is not a readable file" >&2
+		echo "$MSG_PREFIX: warning: \"$1\" is not a readable file" >&2
 		shift
 		continue
 	}
 
 	sum=$(cksum "$1" | awk '{print $1}')
 	! $(ls in | grep -q $sum) || {
-		echo "$MSG_PREFIX: warning: \"$1\" already imported"
+		echo "$MSG_PREFIX: warning: \"$1\" already imported" >&2
 		shift
 		continue
 	}
