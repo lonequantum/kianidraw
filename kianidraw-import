@@ -37,7 +37,7 @@ while test $# -gt 0; do
 		continue
 	}
 
-	! expr "$2" : "\." >/dev/null || {
+	test X$(expr "$2" : "\([_a-zA-Z0-9][-_.a-zA-Z0-9]*\)") = X"$2" >/dev/null || {
 		echo "$MSG_PREFIX: warning: bad name: \"$2\" => skipped" >&2
 		shift 2
 		continue
