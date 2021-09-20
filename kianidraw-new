@@ -4,7 +4,7 @@ MSG_PREFIX=$PROG_NAME
 
 
 test -n "$1" || {
-	echo "$PROG_NAME: 1 arg required: projectName" >&2
+	echo "$PROG_NAME: 1 arg required: <projectName>" >&2
 	exit 64
 }
 

@@ -21,7 +21,7 @@ test X"$1" = X"-m" && {
 }
 
 test -n "$1" || {
-	echo "$MSG_PREFIX: at least 1 arg required: file [other files]" >&2
+	echo "$MSG_PREFIX: at least 1 arg required: <file>..." >&2
 	exit 64
 }
 
