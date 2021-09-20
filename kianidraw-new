@@ -8,6 +8,10 @@ test -n "$1" || {
 	exit 64
 }
 
-mkdir -m 711 "$1" || exit 1
+mkdir -m 711 "$1" 2>/dev/null || {
+	echo "$MSG_PREFIX: cannot create project \"$1\" here" >&2
+	exit 1
+}
+
 cd "$1"
 mkdir -m 755 .kianidraw in out tmp && echo "$MSG_PREFIX: created project \"$1\""
