@@ -24,7 +24,7 @@ for arg; do
 	if test X"$arg" = Xall; then
 		to_update="$to_update $(find . -maxdepth 1 -type l | sed 's/^\.\///')"
 	else
-		test -L "$arg" || {
+		test -f "$arg".xcf || {
 			echo "$MSG_PREFIX: warning: resource \"$arg\" not found" >&2
 			continue
 		}
@@ -35,5 +35,5 @@ done
 for u in $to_update; do
 	echo $u
 done | uniq | while read resource; do
-	test -f $resource.xcf || convert $resource $resource.xcf
+	echo $resource
 done

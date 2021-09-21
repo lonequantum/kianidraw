@@ -19,10 +19,9 @@ test -n "$1" || {
 
 cd $INTERNAL_IN
 
-test -L "$1" || {
+test -f "$1".xcf || {
 	echo "$MSG_PREFIX: resource \"$1\" not found" >&2
 	exit 1
 }
 
-test -f $1.xcf || convert $1 $1.xcf
 gimp $1.xcf &
