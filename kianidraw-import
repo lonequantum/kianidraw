@@ -19,7 +19,7 @@ test X"$1" = X"-m" && {
 }
 
 test $# -ge 2 && test $(expr $# % 2) -eq 0 || {
-	echo "$MSG_PREFIX: at least 2 args required per imported resource: (<file> <name>)..." >&2
+	echo "$MSG_PREFIX: at least 2 args required per imported resource: (<file> <resourceName>)..." >&2
 	exit 64
 }
 
@@ -38,13 +38,13 @@ while test $# -gt 0; do
 	}
 
 	test X$(expr "$2" : "\([_a-zA-Z0-9][-_.a-zA-Z0-9]*\)") = X"$2" >/dev/null || {
-		echo "$MSG_PREFIX: warning: bad name: \"$2\" => skipped" >&2
+		echo "$MSG_PREFIX: warning: bad resource name: \"$2\" => skipped" >&2
 		shift 2
 		continue
 	}
 
 	! test -f .kianidraw/in/"$2" || {
-		echo "$MSG_PREFIX: warning: name \"$2\" already in use => skipped" >&2
+		echo "$MSG_PREFIX: warning: resource name \"$2\" already in use => skipped" >&2
 		shift 2
 		continue
 	}
