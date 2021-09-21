@@ -71,7 +71,6 @@ while test $# -gt 0; do
 	ln -s $(path_to_root $INTERNAL_IN)/$EXTERNAL_IN/"$new_filename" $INTERNAL_IN/$2
 	convert $INTERNAL_IN/$2 $INTERNAL_IN/$2.xcf
 
-	sleep 1
 	echo "$MSG_PREFIX: imported \"$1\" as \"$2\""
 	shift 2
 done
