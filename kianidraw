@@ -3,6 +3,7 @@ PROG_NAME=$(basename $0)
 
 command=":"
 add_subcommand() {
+	test -n "$1" || return
 	command="$command && $*"
 	test $1 = kianidraw-new && command="$command && cd $2"
 }
