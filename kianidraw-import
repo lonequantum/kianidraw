@@ -13,7 +13,7 @@ exit_bad_location() {
 	exit 1
 }
 
-for flag in d r w; do
+for flag in d r w x; do
 	test -$flag $INTERNAL_IN || exit_bad_location
 	test -$flag $EXTERNAL_IN || exit_bad_location
 done
