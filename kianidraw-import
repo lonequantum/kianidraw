@@ -1,6 +1,12 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
+INTERNAL_IN=.kianidraw/in
+EXTERNAL_IN=in
+
+path_to_root() {
+	echo $1 | sed 's/[^/]\{1,\}/../g'
+}
 
 exit_bad_location() {
 	echo "$PROG_NAME: not in a valid/usable kianidraw project" >&2
@@ -8,8 +14,8 @@ exit_bad_location() {
 }
 
 for flag in d r w; do
-	test -$flag .kianidraw/in || exit_bad_location
-	test -$flag in            || exit_bad_location
+	test -$flag $INTERNAL_IN || exit_bad_location
+	test -$flag $EXTERNAL_IN || exit_bad_location
 done
 
 move=false
@@ -31,7 +37,7 @@ while test $# -gt 0; do
 	}
 
 	sum=$(cksum "$1" | awk '{print $1}')
-	! $(ls -A in | grep -q $sum) || {
+	! $(ls -A $EXTERNAL_IN | grep -q $sum) || {
 		echo "$MSG_PREFIX: warning: \"$1\" already imported => skipped" >&2
 		shift 2
 		continue
@@ -43,7 +49,7 @@ while test $# -gt 0; do
 		continue
 	}
 
-	! test -f .kianidraw/in/"$2" || {
+	! test -f $INTERNAL_IN/$2 || {
 		echo "$MSG_PREFIX: warning: resource name \"$2\" already in use => skipped" >&2
 		shift 2
 		continue
@@ -52,11 +58,11 @@ while test $# -gt 0; do
 	new_filename=${sum}_$(basename $1)
 
 	if $move; then
-		mv "$1" in/"$new_filename"
+		mv "$1" $EXTERNAL_IN/"$new_filename"
 	else
-		cp "$1" in/"$new_filename"
+		cp "$1" $EXTERNAL_IN/"$new_filename"
 	fi
-	ln -s ../../in/"$new_filename" .kianidraw/in/"$2"
+	ln -s $(path_to_root $INTERNAL_IN)/$EXTERNAL_IN/"$new_filename" $INTERNAL_IN/$2
 
 	sleep 1
 	echo "$MSG_PREFIX: imported \"$1\" as \"$2\""
