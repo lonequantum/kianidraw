@@ -49,6 +49,12 @@ while test $# -gt 0; do
 		continue
 	}
 
+	test $2 != all || {
+		echo "$MSG_PREFIX: warning: cannot name resource \"all\" (reserved keyword) => skipped" >&2
+		shift 2
+		continue
+	}
+
 	! test -f $INTERNAL_IN/$2 || {
 		echo "$MSG_PREFIX: warning: resource name \"$2\" already in use => skipped" >&2
 		shift 2
