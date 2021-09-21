@@ -49,11 +49,12 @@ while test $# -gt 0; do
 		continue
 	}
 
-	test $2 != all || {
-		echo "$MSG_PREFIX: warning: \"all\": reserved keyword => skipped" >&2
+	case $2 in
+	all)
+		echo "$MSG_PREFIX: warning: \"$2\": reserved keyword => skipped" >&2
 		shift 2
-		continue
-	}
+		continue;;
+	esac
 
 	! test -f $INTERNAL_IN/$2 || {
 		echo "$MSG_PREFIX: warning: \"$2\": name already in use => skipped" >&2
