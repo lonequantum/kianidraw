@@ -15,7 +15,7 @@ while test $# -ge 1; do
 		subcommand=kianidraw-$1;;
 	*)
 		if test -z "$subcommand"; then
-			echo "$PROG_NAME: warning: arg ignored: \"$1\"" >&2
+			echo "$PROG_NAME: warning: \"$1\": arg ignored" >&2
 		else
 			subcommand="$subcommand \"$1\""
 		fi;;

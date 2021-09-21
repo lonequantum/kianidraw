@@ -20,7 +20,7 @@ test -n "$1" || {
 cd $INTERNAL_IN
 
 test -f "$1".xcf || {
-	echo "$MSG_PREFIX: resource \"$1\" not found" >&2
+	echo "$MSG_PREFIX: \"$1\": resource not found" >&2
 	exit 1
 }
 

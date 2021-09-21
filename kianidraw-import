@@ -31,32 +31,32 @@ test $# -ge 2 && test $(expr $# % 2) -eq 0 || {
 
 while test $# -gt 0; do
 	test -r "$1" || {
-		echo "$MSG_PREFIX: warning: \"$1\" is not a readable file => skipped" >&2
+		echo "$MSG_PREFIX: warning: \"$1\": unreadable file => skipped" >&2
 		shift 2
 		continue
 	}
 
 	sum=$(cksum "$1" | awk '{print $1}')
 	! $(ls -A $EXTERNAL_IN | grep -q $sum) || {
-		echo "$MSG_PREFIX: warning: \"$1\" already imported => skipped" >&2
+		echo "$MSG_PREFIX: warning: \"$1\": file already imported => skipped" >&2
 		shift 2
 		continue
 	}
 
 	test X$(expr "$2" : "\([_a-zA-Z0-9][-_.a-zA-Z0-9]*\)") = X"$2" >/dev/null || {
-		echo "$MSG_PREFIX: warning: bad resource name: \"$2\" => skipped" >&2
+		echo "$MSG_PREFIX: warning: \"$2\": bad resource name => skipped" >&2
 		shift 2
 		continue
 	}
 
 	test $2 != all || {
-		echo "$MSG_PREFIX: warning: cannot name resource \"all\" (reserved keyword) => skipped" >&2
+		echo "$MSG_PREFIX: warning: \"all\": reserved keyword => skipped" >&2
 		shift 2
 		continue
 	}
 
 	! test -f $INTERNAL_IN/$2 || {
-		echo "$MSG_PREFIX: warning: resource name \"$2\" already in use => skipped" >&2
+		echo "$MSG_PREFIX: warning: \"$2\": name already in use => skipped" >&2
 		shift 2
 		continue
 	}

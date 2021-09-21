@@ -25,7 +25,7 @@ for arg; do
 		to_update="$to_update $(find . -maxdepth 1 -type l | sed 's/^\.\///')"
 	else
 		test -f "$arg".xcf || {
-			echo "$MSG_PREFIX: warning: resource \"$arg\" not found" >&2
+			echo "$MSG_PREFIX: warning: \"$arg\": resource not found" >&2
 			continue
 		}
 		to_update="$to_update $arg"

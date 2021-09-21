@@ -10,7 +10,7 @@ test -n "$1" || {
 }
 
 mkdir "$1" 2>/dev/null || {
-	echo "$MSG_PREFIX: cannot create project \"$1\" here" >&2
+	echo "$MSG_PREFIX: \"$1\": cannot create this project here" >&2
 	exit 1
 }
 
