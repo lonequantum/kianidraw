@@ -1,0 +1,28 @@
+#!/bin/sh
+PROG_NAME=$(basename $0)
+MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
+INTERNAL_IN=.kianidraw/in
+
+exit_bad_location() {
+	echo "$PROG_NAME: not in a valid/usable kianidraw project" >&2
+	exit 1
+}
+
+for flag in d r w x; do
+	test -$flag $INTERNAL_IN || exit_bad_location
+done
+
+test -n "$1" || {
+	echo "$MSG_PREFIX: 1 arg required: <resourceName>" >&2
+	exit 64
+}
+
+cd $INTERNAL_IN
+
+test -L "$1" || {
+	echo "$MSG_PREFIX: resource \"$1\" not found" >&2
+	exit 1
+}
+
+test -f $1.xcf || convert $1 $1.xcf
+gimp $1.xcf &
