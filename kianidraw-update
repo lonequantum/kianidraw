@@ -22,7 +22,7 @@ cd $INTERNAL_IN
 to_update=""
 for arg; do
 	if test X"$arg" = Xall; then
-		to_update="$to_update $(find . -maxdepth 1 -type l | sed 's/^\.\///')"
+		to_update="$to_update $(find . ! -name . -prune -type l | sed 's/^\.\///')"
 	else
 		test -f "$arg.d/$arg.xcf" || {
 			echo "$MSG_PREFIX: warning: \"$arg\": resource not found => skipped" >&2
