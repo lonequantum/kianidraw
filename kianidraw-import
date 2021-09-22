@@ -70,7 +70,8 @@ while test $# -gt 0; do
 		cp "$1" $EXTERNAL_IN/"$new_filename"
 	fi
 	ln -s $(path_to_root $INTERNAL_IN)/$EXTERNAL_IN/"$new_filename" $INTERNAL_IN/$2
-	convert $INTERNAL_IN/$2 $INTERNAL_IN/$2.xcf
+	mkdir $INTERNAL_IN/$2.d
+	convert $INTERNAL_IN/$2 $INTERNAL_IN/$2.d/$2.xcf
 
 	echo "$MSG_PREFIX: imported \"$1\" as \"$2\""
 	shift 2
