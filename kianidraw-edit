@@ -4,24 +4,22 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 INTERNAL_IN=.kianidraw/in
 
 exit_bad_location() {
-	echo "$PROG_NAME: not in a valid/usable kianidraw project" >&2
+	echo "$PROG_NAME: not in a valid/usable kianidraw project, please cd and/or check permissions" >&2
 	exit 1
 }
 
-for flag in d r w x; do
-	test -$flag $INTERNAL_IN || exit_bad_location
-done
+test -d $INTERNAL_IN || exit_bad_location
+find . -type d -exec chmod u+rwx {} \; || exit_bad_location
+find . -type f -exec chmod u+rw  {} \; || exit_bad_location
 
 test -n "$1" || {
 	echo "$MSG_PREFIX: 1 arg required: <resourceName>" >&2
 	exit 64
 }
 
-cd $INTERNAL_IN
-
-test -f "$1.d/$1.xcf" || {
+test -f $INTERNAL_IN/"$1.d/$1.xcf" || {
 	echo "$MSG_PREFIX: \"$1\": resource not found" >&2
 	exit 1
 }
 
-gimp $1.d/$1.xcf &
+gimp $INTERNAL_IN/$1.d/$1.xcf &

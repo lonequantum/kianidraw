@@ -1,6 +1,5 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
-MSG_PREFIX=$PROG_NAME
 INTERNAL_IN=.kianidraw/in
 EXTERNAL_IN=in
 
@@ -10,9 +9,9 @@ test -n "$1" || {
 }
 
 mkdir "$1" 2>/dev/null || {
-	echo "$MSG_PREFIX: \"$1\": cannot create this project here" >&2
+	echo "$PROG_NAME: \"$1\": cannot create this project here, please check permissions" >&2
 	exit 1
 }
 
 cd "$1"
-mkdir -p $INTERNAL_IN $EXTERNAL_IN && echo "$MSG_PREFIX: created project \"$1\""
+mkdir -p $INTERNAL_IN $EXTERNAL_IN && echo "$PROG_NAME: created project \"$1\""
