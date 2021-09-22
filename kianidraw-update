@@ -9,8 +9,8 @@ exit_bad_location() {
 }
 
 test -d $INTERNAL_IN || exit_bad_location
-find . -type d -exec chmod u+rwx {} \; || exit_bad_location
-find . -type f -exec chmod u+rw  {} \; || exit_bad_location
+find . -type d | xargs chmod u+rwx || exit_bad_location
+find . -type f | xargs chmod u+rw  || exit_bad_location
 
 test -n "$1" || {
 	echo "$MSG_PREFIX: at least 1 arg required: all|<resourceName>..." >&2
@@ -22,7 +22,7 @@ cd $INTERNAL_IN
 to_update=""
 for arg; do
 	if test X"$arg" = Xall; then
-		to_update="$to_update $(find . -maxdepth 1 -type l | sed 's/^\.\///')"
+		to_update="$to_update $(find . ! -name . -prune -type l | sed 's/^\.\///')"
 	else
 		test -f "$arg.d/$arg.xcf" || {
 			echo "$MSG_PREFIX: warning: \"$arg\": resource not found => skipped" >&2

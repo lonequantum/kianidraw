@@ -15,8 +15,8 @@ exit_bad_location() {
 
 test -d $INTERNAL_IN || exit_bad_location
 test -d $EXTERNAL_IN || exit_bad_location
-find . -type d -exec chmod u+rwx {} \; || exit_bad_location
-find . -type f -exec chmod u+rw  {} \; || exit_bad_location
+find . -type d | xargs chmod u+rwx || exit_bad_location
+find . -type f | xargs chmod u+rw  || exit_bad_location
 
 move=false
 test X"$1" = X"-m" && {
