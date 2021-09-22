@@ -9,8 +9,8 @@ exit_bad_location() {
 }
 
 test -d $INTERNAL_IN || exit_bad_location
-find . -type d -exec chmod u+rwx {} \; || exit_bad_location
-find . -type f -exec chmod u+rw  {} \; || exit_bad_location
+find . -type d | xargs chmod u+rwx || exit_bad_location
+find . -type f | xargs chmod u+rw  || exit_bad_location
 
 test -n "$1" || {
 	echo "$MSG_PREFIX: at least 1 arg required: all|<resourceName>..." >&2
