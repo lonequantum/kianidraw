@@ -1,5 +1,6 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
+INTERNAL_CONFIG=.kianidraw/config
 INTERNAL_IN=.kianidraw/in
 EXTERNAL_IN=in
 
@@ -14,4 +15,11 @@ mkdir "$1" 2>/dev/null || {
 }
 
 cd "$1"
-mkdir -p $INTERNAL_IN $EXTERNAL_IN && echo "$PROG_NAME: created project \"$1\""
+mkdir -p $INTERNAL_IN $EXTERNAL_IN \
+&& { cat <<END
+working_size_max=1920x1080
+output_size_max=1280x720
+duration=5
+END
+} > $INTERNAL_CONFIG \
+&& echo "$PROG_NAME: created project \"$1\""
