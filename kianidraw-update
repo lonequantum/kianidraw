@@ -17,14 +17,12 @@ test -n "$1" || {
 	exit 64
 }
 
-cd $INTERNAL_IN
-
 to_update=""
 for arg; do
 	if test X"$arg" = Xall; then
-		to_update="$to_update $(find . ! -name . -prune -type l | sed 's/^\.\///')"
+		to_update="$to_update $(kianidraw get resources/)"
 	else
-		test -f "$arg.d/$arg.xcf" || {
+		test -f $INTERNAL_IN/"$arg.d/$arg.xcf" || {
 			echo "$MSG_PREFIX: warning: \"$arg\": resource not found => skipped" >&2
 			continue
 		}
@@ -55,6 +53,6 @@ for u in $to_update; do
 	echo $u
 done | uniq | while read resource; do
 	echo "$MSG_PREFIX: processing elements for \"$resource\"…"
-	rm -f $resource.d/*.png
-	convert_xcf_to_pngs $resource.d/$resource.xcf $resource.d
+	rm -f $INTERNAL_IN/$resource.d/*.png
+	convert_xcf_to_pngs $INTERNAL_IN/$resource.d/$resource.xcf $INTERNAL_IN/$resource.d
 done
