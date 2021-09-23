@@ -18,7 +18,7 @@ test -d $EXTERNAL_IN || exit_bad_location
 find . -type d | xargs chmod u+rwx || exit_bad_location
 find . -type f | xargs chmod u+rw  || exit_bad_location
 
-working_size_max=$(kianidraw get config/working_size_max) || exit 1
+working_size_max=$(kianidraw-get config/working_size_max) || exit 1
 expr "$working_size_max" : "[0-9]\{3,\}x[0-9]\{3,\}" >/dev/null || {
 	echo "$MSG_PREFIX: config/working_size_max: bad value format" >&2
 	exit 1

@@ -29,7 +29,7 @@ config)
 		exit
 	}
 
-	value=$(kianidraw get config/ | awk -F = "/^$item=/ {print \$2}")
+	value=$(kianidraw-get config/ | awk -F = "/^$item=/ {print \$2}")
 	if test -n "$value"; then
 		echo $value
 	else
@@ -39,8 +39,8 @@ config)
 
 resources)
 	test X"$item" = Xall && {
-		for r in $(kianidraw get resources/); do
-			elements=$(kianidraw get resources/$r)
+		for r in $(kianidraw-get resources/); do
+			elements=$(kianidraw-get resources/$r)
 			echo $r: $elements
 		done
 		exit

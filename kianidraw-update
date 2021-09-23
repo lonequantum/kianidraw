@@ -20,7 +20,7 @@ test -n "$1" || {
 to_update=""
 for arg; do
 	if test X"$arg" = Xall; then
-		to_update="$to_update $(kianidraw get resources/)"
+		to_update="$to_update $(kianidraw-get resources/)"
 	else
 		test -f $INTERNAL_IN/"$arg.d/$arg.xcf" || {
 			echo "$MSG_PREFIX: warning: \"$arg\": resource not found => skipped" >&2
