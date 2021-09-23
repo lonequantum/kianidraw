@@ -25,11 +25,11 @@ item=$(expr "$1" : '.*/\(.*\)')
 case $class in
 config)
 	test -z "$item" && {
-		cat $INTERNAL_CONFIG | awk '/^[-_0-9a-zA-Z]+=[-_ 0-9a-zA-Z]+/ {print}'
+		cat $INTERNAL_CONFIG | awk '/^[-_0-9a-zA-Z]+=[-_0-9a-zA-Z]+[-_ 0-9a-zA-Z]*/ {print}' | sort -u -t= -k1,1
 		exit
 	}
 
-	value=$(grep "^$item=" $INTERNAL_CONFIG | cut -d= -f2)
+	value=$(kianidraw get config/ | awk -F = "/^$item=/ {print \$2}")
 	if test -n "$value"; then
 		echo $value
 	else
