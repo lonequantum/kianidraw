@@ -16,10 +16,6 @@ mkdir "$1" 2>/dev/null || {
 
 cd "$1"
 mkdir -p $INTERNAL_IN $EXTERNAL_IN \
-&& { cat <<END
-working_size_max=1920x1080
-output_size_max=1280x720
-duration=5
-END
-} > $INTERNAL_CONFIG \
+&& > $INTERNAL_CONFIG \
+&& kianidraw-set config/ defaults >/dev/null \
 && echo "$PROG_NAME: created project \"$1\""

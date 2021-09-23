@@ -1,0 +1,55 @@
+#!/bin/sh
+PROG_NAME=$(basename $0)
+MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
+INTERNAL_CONFIG=.kianidraw/config
+
+exit_bad_location() {
+	echo "$PROG_NAME: not in a valid/usable kianidraw project, please cd and/or check permissions" >&2
+	exit 1
+}
+
+test -f $INTERNAL_CONFIG || exit_bad_location
+find . -type d | xargs chmod u+rwx || exit_bad_location
+find . -type f | xargs chmod u+rw  || exit_bad_location
+
+test $# -eq 2 || {
+	echo "$MSG_PREFIX: 2 args required: (config/<property> <value>) | (config/ defaults)" >&2
+	exit 64
+}
+
+class=$(expr "$1" : '\(.*\)/')
+item=$(expr "$1" : '.*/\(.*\)')
+value=$2
+
+case $class in
+config)
+	test -z "$item" && {
+		if test X"$2" = Xdefaults; then
+			{
+				cat <<END
+working_size_max=1920x1080
+output_size_max=1280x720
+duration=5
+END
+			} > $INTERNAL_CONFIG
+			echo "$MSG_PREFIX: reset config to its default values"
+			exit
+		else
+			echo "$MSG_PREFIX: config: please provide a property" >&2
+			exit 64
+		fi
+	}
+
+	old_value=$(kianidraw-get "$1" 2>/dev/null)
+	ret=$?
+	if test $ret -eq 0; then
+		#TODO
+		echo $old_value
+	else
+		echo "$item=$value" >> $INTERNAL_CONFIG
+		echo "$MSG_PREFIX: added \"$item=$value\" to config"
+	fi;;
+*)
+	echo "$MSG_PREFIX: \"$1\": not found" >&2
+	exit 1
+esac
