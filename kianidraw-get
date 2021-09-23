@@ -13,7 +13,7 @@ find . -type d | xargs chmod u+rwx || exit_bad_location
 find . -type f | xargs chmod u+rw  || exit_bad_location
 
 test -n "$1" || {
-	echo "$MSG_PREFIX: 1 arg required: config/<property>" >&2
+	echo "$MSG_PREFIX: 1 arg required: config/[<property>]" >&2
 	exit 64
 }
 
@@ -22,6 +22,11 @@ asked=$(expr "$1" : '.*/\(.*\)')
 
 case $class in
 config)
+	test -z "$asked" && {
+		cat $INTERNAL_CONFIG | awk '/^[-_0-9a-zA-Z]+=[-_ 0-9a-zA-Z]+/ {print}'
+		exit
+	}
+
 	value=$(grep "^$asked=" $INTERNAL_CONFIG | cut -d= -f2)
 	if test -n "$value"; then
 		echo $value
