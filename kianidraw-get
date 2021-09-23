@@ -15,7 +15,7 @@ find . -type d | xargs chmod u+rwx || exit_bad_location
 find . -type f | xargs chmod u+rw  || exit_bad_location
 
 test -n "$1" || {
-	echo "$MSG_PREFIX: 1 arg required: (config/[<property>]) | (resources/[<resourceName>])" >&2
+	echo "$MSG_PREFIX: 1 arg required: (config/[<property>]) | (resources/[all|<resourceName>])" >&2
 	exit 64
 }
 
