@@ -20,16 +20,16 @@ test -n "$1" || {
 }
 
 class=$(expr "$1" : '\(.*\)/')
-asked=$(expr "$1" : '.*/\(.*\)')
+item=$(expr "$1" : '.*/\(.*\)')
 
 case $class in
 config)
-	test -z "$asked" && {
+	test -z "$item" && {
 		cat $INTERNAL_CONFIG | awk '/^[-_0-9a-zA-Z]+=[-_ 0-9a-zA-Z]+/ {print}'
 		exit
 	}
 
-	value=$(grep "^$asked=" $INTERNAL_CONFIG | cut -d= -f2)
+	value=$(grep "^$item=" $INTERNAL_CONFIG | cut -d= -f2)
 	if test -n "$value"; then
 		echo $value
 	else
@@ -38,7 +38,7 @@ config)
 	fi;;
 
 resources)
-	test X"$asked" = Xall && {
+	test X"$item" = Xall && {
 		for r in $(kianidraw get resources/); do
 			elements=$(kianidraw get resources/$r)
 			echo $r: $elements
@@ -47,12 +47,12 @@ resources)
 	}
 
 	cd $INTERNAL_IN
-	test -z "$asked" && {
+	test -z "$item" && {
 		find . ! -name . -prune -type l | sed 's/^\.\///'
 		exit
 	}
 
-	cd "$asked".d 2>/dev/null || {
+	cd "$item".d 2>/dev/null || {
 		echo "$MSG_PREFIX: \"$1\": not found" >&2
 		exit 1
 	}
