@@ -1,0 +1,35 @@
+#!/bin/sh
+PROG_NAME=$(basename $0)
+MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
+INTERNAL_CONFIG=.kianidraw/config
+
+exit_bad_location() {
+	echo "$PROG_NAME: not in a valid/usable kianidraw project, please cd and/or check permissions" >&2
+	exit 1
+}
+
+test -f $INTERNAL_CONFIG || exit_bad_location
+find . -type d | xargs chmod u+rwx || exit_bad_location
+find . -type f | xargs chmod u+rw  || exit_bad_location
+
+test -n "$1" || {
+	echo "$MSG_PREFIX: 1 arg required: config/<property>" >&2
+	exit 64
+}
+
+class=$(expr "$1" : '\(.*\)/')
+case $class in
+config)
+	property=$(expr "$1=" : '.*/\(.*\)')
+	value=$(grep "^$property" $INTERNAL_CONFIG | cut -d= -f2)
+	if test -n "$value"; then
+		echo $value
+	else
+		echo "$MSG_PREFIX: \"$1\": property not found" >&2
+		exit 1
+	fi
+	;;
+*)
+	echo "$MSG_PREFIX: \"$1\": not found" >&2
+	exit 1
+esac
