@@ -18,10 +18,11 @@ test -n "$1" || {
 }
 
 class=$(expr "$1" : '\(.*\)/')
+asked=$(expr "$1" : '.*/\(.*\)')
+
 case $class in
 config)
-	property=$(expr "$1=" : '.*/\(.*\)')
-	value=$(grep "^$property" $INTERNAL_CONFIG | cut -d= -f2)
+	value=$(grep "^$asked=" $INTERNAL_CONFIG | cut -d= -f2)
 	if test -n "$value"; then
 		echo $value
 	else
