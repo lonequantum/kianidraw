@@ -38,6 +38,14 @@ config)
 	fi;;
 
 resources)
+	test X"$asked" = Xall && {
+		for r in $(kianidraw get resources/); do
+			elements=$(kianidraw get resources/$r)
+			echo $r: $elements
+		done
+		exit
+	}
+
 	cd $INTERNAL_IN
 	test -z "$asked" && {
 		find . ! -name . -prune -type l | sed 's/^\.\///'
