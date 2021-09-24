@@ -1,8 +1,6 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
-INTERNAL_CONFIG=.kianidraw/config
-INTERNAL_IN=.kianidraw/in
-EXTERNAL_IN=in
+. /usr/local/lib/kianidraw-common
 
 test -n "$1" || {
 	echo "$PROG_NAME: 1 arg required: <projectName>" >&2
@@ -15,7 +13,7 @@ mkdir "$1" 2>/dev/null || {
 }
 
 cd "$1"
-mkdir -p $INTERNAL_IN $EXTERNAL_IN \
+
+mkdir -p $INTERNAL_IN_D $EXTERNAL_IN_D \
 && > $INTERNAL_CONFIG \
-&& kianidraw-set config/ defaults >/dev/null \
 && echo "$PROG_NAME: created project \"$1\""
