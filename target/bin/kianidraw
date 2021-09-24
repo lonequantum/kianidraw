@@ -14,6 +14,7 @@ while test $# -ge 1; do
 	new|import|edit|update|get|set)
 		test -n "$subcommand" && add_subcommand $subcommand
 		subcommand=kianidraw-$1;;
+
 	*)
 		if test -z "$subcommand"; then
 			echo "$PROG_NAME: warning: \"$1\": arg ignored" >&2
