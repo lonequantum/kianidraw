@@ -4,6 +4,8 @@ INTERNAL_IN_D=.kianidraw/in
 EXTERNAL_IN_D=in
 
 exit_bad_location() {
-	echo "$PROG_NAME: not in a valid/usable kianidraw project, please cd and/or check permissions" >&2
+	msg_prefix=$1
+
+	echo "$msg_prefix: not in a valid/usable kianidraw project, please cd or check permissions" >&2
 	exit 1
 }
