@@ -1,28 +1,13 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
-INTERNAL_IN=.kianidraw/in
-EXTERNAL_IN=in
+. /usr/local/lib/kianidraw-common
 
-path_to_project_root() {
-	echo $1 | sed 's/[^/]\{1,\}/../g'
-}
-
-exit_bad_location() {
-	echo "$PROG_NAME: not in a valid/usable kianidraw project, please cd and/or check permissions" >&2
-	exit 1
-}
-
-test -d $INTERNAL_IN || exit_bad_location
-test -d $EXTERNAL_IN || exit_bad_location
-find . -type d | xargs chmod u+rwx || exit_bad_location
-find . -type f | xargs chmod u+rw  || exit_bad_location
+is_structure_ok || exit_bad_location "$PROG_NAME"
 
 working_size_max=$(kianidraw-get config/working_size_max) || exit 1
-expr "$working_size_max" : "[0-9]\{3,\}x[0-9]\{3,\}" >/dev/null || {
-	echo "$MSG_PREFIX: config/working_size_max: bad value format" >&2
-	exit 1
-}
+expr "$working_size_max" : "[0-9]\{2,\}x[0-9]\{2,\}" >/dev/null \
+|| exit_error "$MSG_PREFIX: config/working_size_max: bad value format"
 
 move=false
 test X"$1" = X"-m" && {
@@ -30,10 +15,8 @@ test X"$1" = X"-m" && {
 	shift
 }
 
-test $# -ge 2 && test $(expr $# % 2) -eq 0 || {
-	echo "$MSG_PREFIX: at least 2 args required per imported resource: (<file> <resourceName>)..." >&2
-	exit 64
-}
+test $# -ge 2 && test $(expr $# % 2) -eq 0 \
+|| exit_bad_args "$MSG_PREFIX: at least 2 args required per imported resource: (<file> <resourceName>)..."
 
 while test $# -gt 0; do
 	test -r "$1" || {
@@ -43,14 +26,14 @@ while test $# -gt 0; do
 	}
 
 	sum=$(cksum "$1" | awk '{print $1}')
-	! $(ls -A $EXTERNAL_IN | grep -q $sum) || {
+	! $(ls -A $EXTERNAL_IN_D | grep -q $sum) || {
 		echo "$MSG_PREFIX: warning: \"$1\": file already imported => skipped" >&2
 		shift 2
 		continue
 	}
 
 	test X$(expr "$2" : "\([_a-zA-Z0-9][-_.a-zA-Z0-9]*\)") = X"$2" >/dev/null || {
-		echo "$MSG_PREFIX: warning: \"$2\": bad resource name => skipped" >&2
+		echo "$MSG_PREFIX: warning: \"$2\": bad resource name format => skipped" >&2
 		shift 2
 		continue
 	}
@@ -62,22 +45,22 @@ while test $# -gt 0; do
 		continue;;
 	esac
 
-	! test -f $INTERNAL_IN/$2 || {
+	! test -f $INTERNAL_IN_D/$2 || {
 		echo "$MSG_PREFIX: warning: \"$2\": resource name already in use => skipped" >&2
 		shift 2
 		continue
 	}
 
 	new_filename=${sum}_$(basename $1)
-
 	if $move; then
-		mv "$1" $EXTERNAL_IN/"$new_filename"
+		mv "$1" $EXTERNAL_IN_D/"$new_filename"
 	else
-		cp "$1" $EXTERNAL_IN/"$new_filename"
+		cp "$1" $EXTERNAL_IN_D/"$new_filename"
 	fi
-	ln -s $(path_to_project_root $INTERNAL_IN)/$EXTERNAL_IN/"$new_filename" $INTERNAL_IN/$2
-	mkdir $INTERNAL_IN/$2.d
-	convert -resize $working_size_max $INTERNAL_IN/$2 $INTERNAL_IN/$2.d/$2.xcf
+
+	ln -s $(return_path $INTERNAL_IN_D)/$EXTERNAL_IN_D/"$new_filename" $INTERNAL_IN_D/$2
+	mkdir $INTERNAL_IN_D/$2.d
+	convert -resize $working_size_max $INTERNAL_IN_D/$2 $INTERNAL_IN_D/$2.d/$2.xcf
 
 	echo "$MSG_PREFIX: imported \"$1\" as \"$2\""
 	shift 2

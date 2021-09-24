@@ -64,3 +64,9 @@ is_structure_ok() {
 	find "$dir" -type d | are_dir_perms_ok -  || return 1
 	find "$dir" -type f | are_file_perms_ok - || return 1
 }
+
+return_path() {
+	path=$1
+
+	echo "$path" | sed 's/[^/]\{1,\}/../g'
+}
