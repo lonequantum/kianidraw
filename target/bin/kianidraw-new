@@ -2,15 +2,10 @@
 PROG_NAME=$(basename $0)
 . /usr/local/lib/kianidraw-common
 
-test -n "$1" || {
-	echo "$PROG_NAME: 1 arg required: <projectName>" >&2
-	exit 64
-}
+test -n "$1" || exit_bad_args "$PROG_NAME: 1 arg required: <projectName>"
 
-mkdir "$1" 2>/dev/null || {
-	echo "$PROG_NAME: \"$1\": cannot create this project here, please check permissions" >&2
-	exit 1
-}
+mkdir "$1" 2>/dev/null \
+|| exit_error "$PROG_NAME: \"$1\": cannot create this project here, please check permissions"
 
 cd "$1"
 

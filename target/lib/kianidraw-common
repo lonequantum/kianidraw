@@ -1,4 +1,5 @@
 #!/bin/sh
+SYSTEM_CONFIG=/usr/local/etc/kianidraw.config
 INTERNAL_CONFIG=.kianidraw/config
 INTERNAL_IN_D=.kianidraw/in
 EXTERNAL_IN_D=in
@@ -8,4 +9,58 @@ exit_bad_location() {
 
 	echo "$msg_prefix: not in a valid/usable kianidraw project, please cd or check permissions" >&2
 	exit 1
+}
+
+exit_bad_args() {
+	msg=$1
+
+	echo "$msg" >&2
+	exit 64
+}
+
+exit_error() {
+	msg=$1
+
+	echo "$msg" >&2
+	exit 1
+}
+
+are_file_perms_ok() {
+	file=$1
+
+	if test X"$file" = X"-"; then
+		while read file; do
+			test -r "$file" || return 1
+			test -w "$file" || return 1
+		done
+	else
+		test -r "$file" || return 1
+		test -w "$file" || return 1
+	fi
+}
+
+are_dir_perms_ok() {
+	dir=$1
+
+	if test X"$dir" = X"-"; then
+		while read dir; do
+			test -r "$dir" || return 1
+			test -w "$dir" || return 1
+			test -x "$dir" || return 1
+		done
+	else
+		test -r "$dir" || return 1
+		test -w "$dir" || return 1
+		test -x "$dir" || return 1
+	fi
+}
+
+is_structure_ok() {
+	dir=${1:-.}
+
+	test -d "$dir"/$INTERNAL_IN_D   || return 1
+	test -d "$dir"/$EXTERNAL_IN_D   || return 1
+	test -f "$dir"/$INTERNAL_CONFIG || return 1
+	find "$dir" -type d | are_dir_perms_ok -  || return 1
+	find "$dir" -type f | are_file_perms_ok - || return 1
 }

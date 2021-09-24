@@ -1,64 +1,52 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
-INTERNAL_CONFIG=.kianidraw/config
-INTERNAL_IN=.kianidraw/in
+. /usr/local/lib/kianidraw-common
 
-exit_bad_location() {
-	echo "$PROG_NAME: not in a valid/usable kianidraw project, please cd and/or check permissions" >&2
-	exit 1
-}
+is_structure_ok || exit_bad_location "$PROG_NAME"
 
-test -d $INTERNAL_IN     || exit_bad_location
-test -f $INTERNAL_CONFIG || exit_bad_location
-find . -type d | xargs chmod u+rwx || exit_bad_location
-find . -type f | xargs chmod u+rw  || exit_bad_location
+test -n "$1" \
+|| exit_bad_args "$MSG_PREFIX: 1 arg required: config[/<property>] | resources[/(all|<resourceName>)]"
 
-test -n "$1" || {
-	echo "$MSG_PREFIX: 1 arg required: (config/[<property>]) | (resources/[all|<resourceName>])" >&2
-	exit 64
-}
-
-class=$(expr "$1" : '\(.*\)/')
-item=$(expr "$1" : '.*/\(.*\)')
+class=$(expr "$1" : '\([^/]*\)')
+item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
 
 case $class in
 config)
 	test -z "$item" && {
-		cat $INTERNAL_CONFIG | awk '/^[-_0-9a-zA-Z]+=[-_0-9a-zA-Z]+[-_ 0-9a-zA-Z]*/ {print}' | sort -u -t= -k1,1
+		cat "$INTERNAL_CONFIG" "$SYSTEM_CONFIG" \
+		| awk '/^[-_0-9a-zA-Z]+=[-_0-9a-zA-Z]+[-_ 0-9a-zA-Z]*/ {print}' \
+		| nl -s = \
+		| sort -u -t = -k2,2 \
+		| cut -d = -f2-
 		exit
 	}
 
-	value=$(kianidraw-get config/ | awk -F = "/^$item=/ {print \$2}")
+	value=$(kianidraw-get config | awk -F = "/^$item=/ {print \$2}")
 	if test -n "$value"; then
 		echo $value
 	else
-		echo "$MSG_PREFIX: \"$1\": property not found" >&2
-		exit 1
+		exit_error "$MSG_PREFIX: \"$1\": not found"
 	fi;;
 
 resources)
 	test X"$item" = Xall && {
-		for r in $(kianidraw-get resources/); do
+		for r in $(kianidraw-get resources); do
 			elements=$(kianidraw-get resources/$r)
 			echo $r: $elements
 		done
 		exit
 	}
 
-	cd $INTERNAL_IN
+	cd $INTERNAL_IN_D
 	test -z "$item" && {
 		find . ! -name . -prune -type l | sed 's/^\.\///'
 		exit
 	}
 
-	cd "$item".d 2>/dev/null || {
-		echo "$MSG_PREFIX: \"$1\": not found" >&2
-		exit 1
-	}
-	ls -1 *.png | sed 's/\.png//';;
+	cd "$item".d 2>/dev/null || exit_error "$MSG_PREFIX: \"$1\": not found"
+	ls -1 *.png 2>/dev/null | sed 's/\.png//';;
 
 *)
-	echo "$MSG_PREFIX: \"$1\": not found" >&2
-	exit 1
+	exit_error "$MSG_PREFIX: \"$class\": unknown class"
 esac
