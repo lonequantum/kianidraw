@@ -8,12 +8,7 @@ test $(id -u) -eq 0 || {
 	exit 77
 }
 
-dev_mode=false
-case $1 in
-[dD][eE][vV])
-	dev_mode=true
-	echo "DEV mode => symlinks instead of copies"
-esac
+dev_mode=true
 
 for dir in bin lib etc; do
 	dest_dir=$(eval printf "\$${dir}_DIR")
