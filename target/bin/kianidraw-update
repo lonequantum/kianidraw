@@ -5,7 +5,7 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
-test -n "$1" || exit_bad_args "$MSG_PREFIX: at least 1 arg required: all|<resourceName>..."
+test -n "$1" || exit_bad_args "Usage: $PROG_NAME all | <resourceName>..."
 
 to_update=""
 for arg; do

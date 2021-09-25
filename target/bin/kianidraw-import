@@ -16,7 +16,7 @@ test X"$1" = X"-m" && {
 }
 
 test $# -ge 2 && test $(expr $# % 2) -eq 0 \
-|| exit_bad_args "$MSG_PREFIX: at least 2 args required per imported resource: (<file> <resourceName>)..."
+|| exit_bad_args "Usage: $PROG_NAME [-m] (<file> <resourceName>)..."
 
 while test $# -gt 0; do
 	test -r "$1" || {
