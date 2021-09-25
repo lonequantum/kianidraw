@@ -1,55 +1,63 @@
 #!/bin/sh
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
-INTERNAL_CONFIG=.kianidraw/config
+. /usr/local/lib/kianidraw-common
 
-exit_bad_location() {
-	echo "$PROG_NAME: not in a valid/usable kianidraw project, please cd and/or check permissions" >&2
-	exit 1
-}
+is_structure_ok || exit_bad_location "$PROG_NAME"
 
-test -f $INTERNAL_CONFIG || exit_bad_location
-find . -type d | xargs chmod u+rwx || exit_bad_location
-find . -type f | xargs chmod u+rw  || exit_bad_location
+USAGE="\
+Usage: $PROG_NAME config/<property> <value>|default
+       $PROG_NAME config default"
 
-test $# -eq 2 || {
-	echo "$MSG_PREFIX: 2 args required: (config/<property> <value>) | (config/ defaults)" >&2
-	exit 64
-}
+test $# -eq 2 || exit_bad_args "$USAGE"
 
-class=$(expr "$1" : '\(.*\)/')
-item=$(expr "$1" : '.*/\(.*\)')
+class=$(expr "$1" : '\([^/]*\)')
+item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
 value=$2
+
+delete_config_line() {
+	line=$1
+
+	awk "!/$line/ {print}" $INTERNAL_CONFIG > $INTERNAL_CONFIG.tmp
+	rm $INTERNAL_CONFIG
+	mv $INTERNAL_CONFIG.tmp $INTERNAL_CONFIG
+}
 
 case $class in
 config)
 	test -z "$item" && {
-		if test X"$2" = Xdefaults; then
-			{
-				cat <<END
-working_size_max=1920x1080
-output_size_max=1280x720
-duration=5
-END
-			} > $INTERNAL_CONFIG
-			echo "$MSG_PREFIX: reset config to its default values"
-			exit
-		else
-			echo "$MSG_PREFIX: config: please provide a property" >&2
-			exit 64
-		fi
+		case $value in
+		default)
+			> $INTERNAL_CONFIG
+			echo "$MSG_PREFIX: deleted local config"
+			exit;;
+		*)
+			exit_bad_args "$USAGE"
+		esac
 	}
 
-	old_value=$(kianidraw-get "$1" 2>/dev/null)
-	ret=$?
-	if test $ret -eq 0; then
-		#TODO
-		echo $old_value
-	else
+	expr "$item" : "$CONFIG_PROP_NAME_PATTERN\$" >/dev/null \
+	|| exit_error "$MSG_PREFIX: config/\"$item\": bad property name format"
+
+	old_value=$(kianidraw-get config/$item 2>/dev/null)
+
+	case $value in
+	default)
+		test -n "$old_value" \
+		|| exit_error "$MSG_PREFIX: config/\"$item\": unknown, default value not available"
+
+		delete_config_line "^$item=$old_value\$"
+		echo "$MSG_PREFIX: deleted \"$item\" from local config";;
+
+	*)
+		expr "$value" : "$CONFIG_PROP_VALUE_PATTERN\$" >/dev/null \
+		|| exit_error "$MSG_PREFIX: config/$item: \"$value\": bad value format"
+
+		delete_config_line "^$item=$old_value\$"
 		echo "$item=$value" >> $INTERNAL_CONFIG
-		echo "$MSG_PREFIX: added \"$item=$value\" to config"
-	fi;;
+		echo "$MSG_PREFIX: updated local config with \"$item=$value\""
+	esac;;
+
 *)
-	echo "$MSG_PREFIX: \"$1\": not found" >&2
-	exit 1
+	exit_bad_args "$USAGE"
 esac
