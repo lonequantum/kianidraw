@@ -28,3 +28,12 @@ for dir in bin lib etc; do
 		echo $dest_dir/$(basename $file)
 	done
 done
+
+BASH_COMP_DIR=/etc/bash_completion.d
+
+rm -f "$BASH_COMP_DIR"/kianidraw
+if $dev_mode; then
+	ln -s "$(pwd)"/kianidraw.bash "$BASH_COMP_DIR"/kianidraw
+else
+	cp kianidraw.bash "$BASH_COMP_DIR"/kianidraw
+fi && echo $BASH_COMP_DIR/kianidraw
