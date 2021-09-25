@@ -5,7 +5,9 @@ INTERNAL_IN_D=.kianidraw/in
 EXTERNAL_IN_D=in
 
 CONFIG_PROP_NAME_PATTERN='[-_0-9a-zA-Z]\{1,\}'
+CONFIG_PROP_NAME_PATTERN_ERE='[-_0-9a-zA-Z]+'
 CONFIG_PROP_VALUE_PATTERN='[-_0-9a-zA-Z]\{1,\}[-_ 0-9a-zA-Z]*'
+CONFIG_PROP_VALUE_PATTERN_ERE='[-_0-9a-zA-Z]+[-_ 0-9a-zA-Z]*'
 
 exit_bad_location() {
 	msg_prefix=$1

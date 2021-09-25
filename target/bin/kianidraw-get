@@ -18,7 +18,7 @@ case $class in
 config)
 	test -z "$item" && {
 		cat $INTERNAL_CONFIG $SYSTEM_CONFIG \
-		| awk "/^$CONFIG_PROP_NAME_PATTERN=$CONFIG_PROP_VALUE_PATTERN/ {print}" \
+		| awk "/^$CONFIG_PROP_NAME_PATTERN_ERE=$CONFIG_PROP_VALUE_PATTERN_ERE/ {print}" \
 		| nl -s = \
 		| sort -u -t = -k2,2 \
 		| cut -d = -f2-
