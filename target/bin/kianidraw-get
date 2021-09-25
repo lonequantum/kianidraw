@@ -17,7 +17,7 @@ item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
 case $class in
 config)
 	test -z "$item" && {
-		cat "$INTERNAL_CONFIG" "$SYSTEM_CONFIG" \
+		cat $INTERNAL_CONFIG $SYSTEM_CONFIG \
 		| awk '/^[-_0-9a-zA-Z]+=[-_0-9a-zA-Z]+[-_ 0-9a-zA-Z]*/ {print}' \
 		| nl -s = \
 		| sort -u -t = -k2,2 \
