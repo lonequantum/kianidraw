@@ -12,7 +12,7 @@ dev_mode=false
 case $1 in
 [dD][eE][vV])
 	dev_mode=true
-	echo "DEV mode => symlinks instead of copies";;
+	echo "DEV mode => symlinks instead of copies"
 esac
 
 for dir in bin lib etc; do

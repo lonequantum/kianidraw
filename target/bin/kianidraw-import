@@ -42,7 +42,7 @@ while test $# -gt 0; do
 	all)
 		echo "$MSG_PREFIX: warning: \"$2\": reserved keyword => skipped" >&2
 		shift 2
-		continue;;
+		continue
 	esac
 
 	! test -f $INTERNAL_IN_D/$2 || {

@@ -20,7 +20,7 @@ while test $# -ge 1; do
 			echo "$PROG_NAME: warning: \"$1\": arg ignored" >&2
 		else
 			subcommand="$subcommand \"$1\""
-		fi;;
+		fi
 	esac
 	shift
 done
