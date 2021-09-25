@@ -10,7 +10,8 @@ test -n "$1" || exit_bad_args "Usage: $PROG_NAME all | <resourceName>..."
 to_update=""
 for arg; do
 	if test X"$arg" = Xall; then
-		to_update="$to_update $(kianidraw-get resources)"
+		to_update="$(kianidraw-get resources)"
+		break
 	else
 		test -f $INTERNAL_IN_D/"$arg.d/$arg.xcf" || {
 			echo "$MSG_PREFIX: warning: \"$arg\": resource not found => skipped" >&2
