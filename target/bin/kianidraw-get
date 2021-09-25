@@ -5,9 +5,11 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
-test -n "$1" || exit_bad_args "\
+USAGE="\
 Usage: $PROG_NAME config[/<property>]
        $PROG_NAME resources[/(all|<resourceName>)]"
+
+test -n "$1" || exit_bad_args "$USAGE"
 
 class=$(expr "$1" : '\([^/]*\)')
 item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
@@ -49,5 +51,5 @@ resources)
 	ls -1 *.png 2>/dev/null | sed 's/\.png//';;
 
 *)
-	exit_error "$MSG_PREFIX: \"$class\": unknown class"
+	exit_bad_args "$USAGE"
 esac
