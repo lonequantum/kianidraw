@@ -3,12 +3,15 @@ bin_DIR=/usr/local/bin
 lib_DIR=/usr/local/lib
 etc_DIR=/usr/local/etc
 
+dev_mode=true
+
+use_bash=true
+BASH_COMP_DIR=/etc/bash_completion.d
+
 test $(id -u) -eq 0 || {
 	echo "permission denied" >&2
 	exit 77
 }
-
-dev_mode=true
 
 for dir in bin lib etc; do
 	dest_dir=$(eval printf "\$${dir}_DIR")
@@ -24,11 +27,11 @@ for dir in bin lib etc; do
 	done
 done
 
-BASH_COMP_DIR=/etc/bash_completion.d
-
-rm -f "$BASH_COMP_DIR"/kianidraw
-if $dev_mode; then
-	ln -s "$(pwd)"/kianidraw.bash "$BASH_COMP_DIR"/kianidraw
-else
-	cp kianidraw.bash "$BASH_COMP_DIR"/kianidraw
-fi && echo $BASH_COMP_DIR/kianidraw
+if $use_bash; then
+	rm -f "$BASH_COMP_DIR"/kianidraw
+	if $dev_mode; then
+		ln -s "$(pwd)"/kianidraw.bash "$BASH_COMP_DIR"/kianidraw
+	else
+		cp kianidraw.bash "$BASH_COMP_DIR"/kianidraw
+	fi && echo $BASH_COMP_DIR/kianidraw
+fi
