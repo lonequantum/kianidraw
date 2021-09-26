@@ -3,6 +3,9 @@
 alias kian=kianidraw
 
 _kian_completion() {
+	Resources=$(kianidraw-get resources 2>/dev/null)
+	Config=$(kianidraw-get config 2>/dev/null)
+
 	case $COMP_CWORD in
 	1)
 		COMPREPLY=($(compgen -W "\
@@ -20,28 +23,28 @@ _kian_completion() {
 		case ${COMP_WORDS[1]} in
 		edit)
 			COMPREPLY=($(compgen -W "\
-				$(kianidraw-get resources 2>/dev/null)\
+				$Resources\
 				"\
 				"${COMP_WORDS[2]}"\
 				));;
 		update)
 			COMPREPLY=($(compgen -W "\
 				all\
-				$(kianidraw-get resources 2>/dev/null)\
+				$Resources\
 				"\
 				"${COMP_WORDS[2]}"\
 			));;
 		set)
 			COMPREPLY=($(compgen -W "\
-				$(kianidraw-get config 2>/dev/null | cut -d = -f1 | awk '{print "config/"$0}')\
+				$(echo $Config | cut -d = -f1 | awk '{print "config/"$0}')\
 				"\
 				"${COMP_WORDS[2]}"\
 			));;
 		get)
 			COMPREPLY=($(compgen -W "\
-				$(kianidraw-get config 2>/dev/null | cut -d = -f1 | awk '{print "config/"$0}')\
+				$(echo $Config | cut -d = -f1 | awk '{print "config/"$0}')\
 				resources/all\
-				$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')\
+				$(echo $Resources | awk '{print "resources/"$0}')\
 				"\
 				"${COMP_WORDS[2]}"\
 			));;
@@ -52,7 +55,7 @@ _kian_completion() {
 		update)
 			COMPREPLY=($(compgen -W "\
 				all\
-				$(kianidraw-get resources 2>/dev/null)\
+				$Resources\
 				"\
 				"${COMP_WORDS[3]}"\
 			));;
@@ -69,7 +72,7 @@ _kian_completion() {
 		update)
 			COMPREPLY=($(compgen -W "\
 				all\
-				$(kianidraw-get resources 2>/dev/null)\
+				$Resources\
 				"\
 				"${COMP_WORDS[$COMP_CWORD]}"\
 			));;
