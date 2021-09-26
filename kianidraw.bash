@@ -62,6 +62,10 @@ _kian_completion() {
 				"\
 				"${COMP_WORDS[3]}"\
 			));;
+		import)
+			compopt -o default
+			COMPREPLY=()
+			;;
 		esac;;
 
 	*)
