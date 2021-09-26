@@ -15,7 +15,13 @@ _kian_completion() {
 		set)
 			COMPREPLY=($(compgen -W "config" "${COMP_WORDS[2]}"));;
 		get)
-			COMPREPLY=($(compgen -W "config resources" "${COMP_WORDS[2]}"));;
+			COMPREPLY=($(compgen -W "\
+				$(kianidraw-get config 2>/dev/null | cut -d = -f1 | awk '{print "config/"$0}') \
+				resources/all \
+				$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}') \
+				" \
+				"${COMP_WORDS[2]}" \
+			));;
 		esac
 	esac
 }
