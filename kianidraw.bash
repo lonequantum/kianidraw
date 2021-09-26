@@ -23,7 +23,7 @@ _kian_completion() {
 				$(kianidraw-get resources 2>/dev/null)\
 				"\
 				"${COMP_WORDS[2]}"\
-				));;
+			));;
 		update)
 			COMPREPLY=($(compgen -W "\
 				all\
