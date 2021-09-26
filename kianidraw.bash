@@ -44,7 +44,7 @@ _kian_completion() {
 				$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')\
 				"\
 				"${COMP_WORDS[2]}"\
-			));;
+			))
 		esac;;
 
 	3)
@@ -65,7 +65,6 @@ _kian_completion() {
 		import)
 			compopt -o default
 			COMPREPLY=()
-			;;
 		esac;;
 
 	*)
@@ -76,7 +75,7 @@ _kian_completion() {
 				$(kianidraw-get resources 2>/dev/null)\
 				"\
 				"${COMP_WORDS[$COMP_CWORD]}"\
-			));;
+			))
 		esac
 	esac
 }
