@@ -9,7 +9,7 @@ use_bash=true
 BASH_COMP_DIR=/etc/bash_completion.d
 
 test $(id -u) -eq 0 || {
-	echo "permission denied" >&2
+	echo "permission denied (are you root?)" >&2
 	exit 77
 }
 

@@ -4,6 +4,9 @@ PROG_NAME=$(basename $0)
 
 test -n "$1" || exit_bad_args "Usage: $PROG_NAME <projectName>"
 
+! test -d "$1" \
+|| exit_error "$PROG_NAME: \"$1\": cannot create this project here, directory already exists"
+
 mkdir "$1" 2>/dev/null \
 || exit_error "$PROG_NAME: \"$1\": cannot create this project here, please check permissions"
 
@@ -11,4 +14,4 @@ cd "$1"
 
 mkdir -p $INTERNAL_IN_D $EXTERNAL_IN_D \
 && > $INTERNAL_CONFIG \
-&& echo "$PROG_NAME: created project \"$1\""
+&& echo "$PROG_NAME: created project \"$1\", remember to cd into it"
