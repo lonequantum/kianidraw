@@ -1,6 +1,6 @@
 #/usr/bin/env bash
 
-_kian_completion() {
+kianidraw_completion() {
 	case $COMP_CWORD in
 	1)
 		COMPREPLY=($(compgen -W "\
@@ -73,4 +73,4 @@ _kian_completion() {
 	esac
 }
 
-complete -F _kian_completion kianidraw
+complete -F kianidraw_completion kianidraw
