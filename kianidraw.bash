@@ -26,8 +26,8 @@ _kian_completion() {
 			));;
 		update)
 			COMPREPLY=($(compgen -W "\
-				all\
-				$(kianidraw-get resources 2>/dev/null)\
+				resources/all\
+				$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')\
 				"\
 				"${COMP_WORDS[2]}"\
 			));;
@@ -51,13 +51,6 @@ _kian_completion() {
 
 	3)
 		case ${COMP_WORDS[1]} in
-		update)
-			COMPREPLY=($(compgen -W "\
-				all\
-				$(kianidraw-get resources 2>/dev/null)\
-				"\
-				"${COMP_WORDS[3]}"\
-			));;
 		set)
 			COMPREPLY=($(compgen -W "\
 				default\
@@ -73,30 +66,12 @@ _kian_completion() {
 
 	4)
 		case ${COMP_WORDS[1]} in
-		update)
-			COMPREPLY=($(compgen -W "\
-				all\
-				$(kianidraw-get resources 2>/dev/null)\
-				"\
-				"${COMP_WORDS[4]}"\
-			));;
 		import)
 			if [ "${COMP_WORDS[2]}" = "-m" ]; then
 				compopt -o default
 				COMPREPLY=()
 			fi
 		esac;;
-
-	*)
-		case ${COMP_WORDS[1]} in
-		update)
-			COMPREPLY=($(compgen -W "\
-				all\
-				$(kianidraw-get resources 2>/dev/null)\
-				"\
-				"${COMP_WORDS[$COMP_CWORD]}"\
-			))
-		esac
 	esac
 }
 
