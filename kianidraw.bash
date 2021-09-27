@@ -75,4 +75,4 @@ _kian_completion() {
 	esac
 }
 
-complete -F _kian_completion kianidraw kian
+complete -F _kian_completion kianidraw
