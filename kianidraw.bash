@@ -65,8 +65,26 @@ _kian_completion() {
 				"${COMP_WORDS[3]}"\
 			));;
 		import)
-			compopt -o default
-			COMPREPLY=()
+			if [ "${COMP_WORDS[2]}" != "-m" ]; then
+				compopt -o default
+				COMPREPLY=()
+			fi
+		esac;;
+
+	4)
+		case ${COMP_WORDS[1]} in
+		update)
+			COMPREPLY=($(compgen -W "\
+				all\
+				$(kianidraw-get resources 2>/dev/null)\
+				"\
+				"${COMP_WORDS[4]}"\
+			));;
+		import)
+			if [ "${COMP_WORDS[2]}" = "-m" ]; then
+				compopt -o default
+				COMPREPLY=()
+			fi
 		esac;;
 
 	*)
