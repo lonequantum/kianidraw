@@ -75,3 +75,9 @@ return_path() {
 
 	echo "$path" | sed 's/[^/]\{1,\}/../g'
 }
+
+item_exists() {
+	_item=$1
+
+	kianidraw-get "$_item" >/dev/null 2>&1
+}

@@ -50,7 +50,7 @@ resources)
 		exit
 	}
 
-	kianidraw-get resources/"$item" >/dev/null 2>&1 \
+	item_exists resources/"$item" \
 	|| exit_error "$MSG_PREFIX: resources/\"$item\": not found"
 
 	process_resource $item
