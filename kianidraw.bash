@@ -1,6 +1,8 @@
 #/usr/bin/env bash
 
-kianidraw_completion() {
+alias kian=kianidraw
+
+kian_completion() {
 	case $COMP_CWORD in
 	1)
 		COMPREPLY=($(compgen -W "\
