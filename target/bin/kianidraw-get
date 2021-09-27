@@ -34,9 +34,9 @@ config)
 	if test -n "$value"; then
 		echo $value
 	else
-		exit_error "$MSG_PREFIX: \"$1\": not found"
-	fi;;
-
+		exit_error "$MSG_PREFIX: config/\"$item\": not found"
+	fi
+	;;
 resources)
 	test X"$item" = Xall && {
 		for r in $(kianidraw-get resources); do
@@ -52,9 +52,9 @@ resources)
 		exit
 	}
 
-	cd "$item".d 2>/dev/null || exit_error "$MSG_PREFIX: \"$1\": not found"
-	ls -1 *.png 2>/dev/null | sed 's/\.png//';;
-
+	cd "$item".d 2>/dev/null || exit_error "$MSG_PREFIX: resources/\"$item\": not found"
+	ls -1 *.png 2>/dev/null | sed 's/\.png//'
+	;;
 *)
 	exit_bad_args "$USAGE"
 esac

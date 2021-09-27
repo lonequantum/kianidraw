@@ -71,7 +71,7 @@ _kian_completion() {
 				compopt -o default
 				COMPREPLY=()
 			fi
-		esac;;
+		esac
 	esac
 }
 

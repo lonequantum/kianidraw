@@ -16,10 +16,11 @@ case $class in
 resources)
 	test -n "$item" || exit_bad_args "$USAGE"
 
-	xcf=$INTERNAL_IN_D/$item.d/$item.xcf
-	test -f "$xcf" || exit_error "$MSG_PREFIX: \"$1\": not found"
-	gimp "$xcf" &;;
+	kianidraw-get resources/"$item" >/dev/null 2>&1 \
+	|| exit_error "$MSG_PREFIX: resources/\"$item\": not found"
 
+	gimp $INTERNAL_IN_D/$item.d/$item.xcf &
+	;;
 *)
 	exit_bad_args "$USAGE"
 esac

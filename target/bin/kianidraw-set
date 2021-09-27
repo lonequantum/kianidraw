@@ -32,7 +32,8 @@ config)
 		default)
 			> $INTERNAL_CONFIG
 			echo "$MSG_PREFIX: deleted local config"
-			exit;;
+			exit
+			;;
 		*)
 			exit_bad_args "$USAGE"
 		esac
@@ -49,8 +50,8 @@ config)
 		|| exit_error "$MSG_PREFIX: config/\"$item\": unknown, default value not available"
 
 		delete_config_line "^$item=$old_value\$"
-		echo "$MSG_PREFIX: deleted \"$item\" from local config";;
-
+		echo "$MSG_PREFIX: deleted \"$item\" from local config"
+		;;
 	*)
 		expr "$value" : "$CONFIG_PROP_VALUE_PATTERN\$" >/dev/null \
 		|| exit_error "$MSG_PREFIX: config/$item: \"$value\": bad value format"
@@ -58,8 +59,8 @@ config)
 		delete_config_line "^$item=$old_value\$"
 		echo "$item=$value" >> $INTERNAL_CONFIG
 		echo "$MSG_PREFIX: updated local config with \"$item=$value\""
-	esac;;
-
+	esac
+	;;
 *)
 	exit_bad_args "$USAGE"
 esac

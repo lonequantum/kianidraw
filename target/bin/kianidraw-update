@@ -34,7 +34,7 @@ END
 process_resource() {
 	resource=$1
 
-	echo "$MSG_PREFIX: processing elements for \"$resource\"…"
+	echo "$MSG_PREFIX: processing elements for \"$resource\" …"
 	rm -f $INTERNAL_IN_D/$resource.d/*.png
 	convert_xcf_to_pngs $INTERNAL_IN_D/$resource.d/$resource.xcf $INTERNAL_IN_D/$resource.d
 }
@@ -51,10 +51,10 @@ resources)
 	}
 
 	kianidraw-get resources/"$item" >/dev/null 2>&1 \
-	|| exit_error "$MSG_PREFIX: \"$1\": not found"
+	|| exit_error "$MSG_PREFIX: resources/\"$item\": not found"
 
-	process_resource $item;;
-
+	process_resource $item
+	;;
 *)
 	exit_bad_args "$USAGE"
 esac
