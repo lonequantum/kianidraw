@@ -6,7 +6,7 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
 USAGE="\
-Usage: $PROG_NAME config[/<property>]
+Usage: $PROG_NAME config[/(all|<property>)]
        $PROG_NAME resources[/(all|<resourceName>)]"
 
 test -n "$1" || exit_bad_args "$USAGE"
@@ -16,7 +16,7 @@ item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
 
 case $class in
 config)
-	test -z "$item" && {
+	test X"$item" = Xall && {
 		cat $INTERNAL_CONFIG $SYSTEM_CONFIG \
 		| awk "/^$CONFIG_PROP_NAME_PATTERN_ERE=$CONFIG_PROP_VALUE_PATTERN_ERE/ {print}" \
 		| nl -s = \
@@ -25,7 +25,12 @@ config)
 		exit
 	}
 
-	value=$(kianidraw-get config | awk -F = "/^$item=/ {print \$2}")
+	test -z "$item" && {
+		kianidraw-get config/all | cut -d = -f1
+		exit
+	}
+
+	value=$(kianidraw-get config/all | awk -F = "/^$item=/ {print \$2}")
 	if test -n "$value"; then
 		echo $value
 	else
