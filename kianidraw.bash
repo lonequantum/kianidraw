@@ -1,7 +1,5 @@
 #/usr/bin/env bash
 
-alias kian=kianidraw
-
 _kian_completion() {
 	case $COMP_CWORD in
 	1)
