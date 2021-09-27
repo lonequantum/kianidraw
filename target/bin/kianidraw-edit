@@ -5,8 +5,21 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
-test -n "$1" || exit_bad_args "Usage: $PROG_NAME <resourceName>"
+USAGE="Usage: $PROG_NAME resources/<resourceName>"
 
-xcf=$INTERNAL_IN_D/$1.d/$1.xcf
-test -f "$xcf" || exit_error "$MSG_PREFIX: \"$1\": resource not found"
-gimp "$xcf" &
+test -n "$1" || exit_bad_args "$USAGE"
+
+class=$(expr "$1" : '\([^/]*\)')
+item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
+
+case $class in
+resources)
+	test -n "$item" || exit_bad_args "$USAGE"
+
+	xcf=$INTERNAL_IN_D/$item.d/$item.xcf
+	test -f "$xcf" || exit_error "$MSG_PREFIX: \"$1\": not found"
+	gimp "$xcf" &;;
+
+*)
+	exit_bad_args "$USAGE"
+esac

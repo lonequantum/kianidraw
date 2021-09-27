@@ -20,7 +20,7 @@ _kian_completion() {
 		case ${COMP_WORDS[1]} in
 		edit)
 			COMPREPLY=($(compgen -W "\
-				$(kianidraw-get resources 2>/dev/null)\
+				$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')\
 				"\
 				"${COMP_WORDS[2]}"\
 			));;
