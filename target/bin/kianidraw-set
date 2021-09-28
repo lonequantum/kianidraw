@@ -54,7 +54,7 @@ config)
 		;;
 	*)
 		check_config_value $name "$value" \
-		|| exit_bad_value "$MSG_PREFIX: config/$name: \"$value\""
+		|| exit_error "$MSG_PREFIX: config/$name: \"$value\": bad value"
 
 		delete_config_line "^$name=$old_value\$"
 		echo "$name=$value" >> $INTERNAL_CONFIG

@@ -7,7 +7,7 @@ is_structure_ok || exit_bad_location "$PROG_NAME"
 
 input_size_max=$(kianidraw-get config/input_size_max)
 check_config_value input_size_max "$input_size_max" \
-|| exit_bad_value "$MSG_PREFIX: config/input_size_max: \"$input_size_max\""
+|| exit_error "$MSG_PREFIX: config/input_size_max: \"$input_size_max\": bad value"
 
 move=false
 test X"$1" = X"-m" && {
