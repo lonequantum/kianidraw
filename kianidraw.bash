@@ -4,9 +4,10 @@ alias kian=kianidraw
 
 kianidraw_completion() {
 	index=$COMP_CWORD
+	current_word=${COMP_WORDS[$COMP_CWORD]}
+
 	while [[ $index > 0 ]]; do
 		sub_arg_no=$((COMP_CWORD - index))
-		current_word=${COMP_WORDS[$COMP_CWORD]}
 
 		case ${COMP_WORDS[$index]} in
 		new)
