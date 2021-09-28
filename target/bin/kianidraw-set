@@ -23,6 +23,16 @@ delete_config_line() {
 	mv $INTERNAL_CONFIG.tmp $INTERNAL_CONFIG
 }
 
+check_config_value() {
+	_item=$1
+	_value=$2
+
+	_pattern=$(eval echo \$CONFIG_${_item}_PATTERN)
+	_pattern=${_pattern:-$CONFIG_PROP_VALUE_PATTERN}
+
+	expr "$_value" : "$_pattern\$" >/dev/null
+}
+
 case $class in
 config)
 	test -n "$item" || exit_bad_args "$USAGE"
@@ -53,7 +63,7 @@ config)
 		echo "$MSG_PREFIX: deleted \"$item\" from local config"
 		;;
 	*)
-		expr "$value" : "$CONFIG_PROP_VALUE_PATTERN\$" >/dev/null \
+		check_config_value $item "$value" \
 		|| exit_error "$MSG_PREFIX: config/$item: \"$value\": bad value format"
 
 		delete_config_line "^$item=$old_value\$"
