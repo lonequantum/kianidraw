@@ -17,6 +17,13 @@ CONFIG_duration_PATTERN='[1-9][0-9]\{0,1\}'
 CONFIG_output_fps_PATTERN='[1-9][0-9]\{0,1\}'
 CONFIG_working_fps_PATTERN='[1-9][0-9]\{0,1\}'
 
+exit_bad_item_value() {
+	_msg_prefix=$1
+
+	echo "$_msg_prefix: bad item value format, please set it with kianidraw-set" >&2
+	exit 1
+}
+
 exit_bad_location() {
 	_msg_prefix=$1
 
