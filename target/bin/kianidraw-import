@@ -22,7 +22,7 @@ all)
 	exit_error "$MSG_PREFIX: \"$1\": reserved keyword"
 esac
 
-! kianidraw-get resources/$1 >/dev/null 2>&1 \
+! item_exists resources/$1 \
 || exit_error "$MSG_PREFIX: \"$1\": resource name already in use"
 
 test -r "$2" \
