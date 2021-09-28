@@ -5,6 +5,8 @@ alias kian=kianidraw
 kianidraw_completion() {
 	index=$COMP_CWORD
 	current_word=${COMP_WORDS[$COMP_CWORD]}
+	config_list=$(kianidraw-get config 2>/dev/null | awk '{print "config/"$0}')
+	resources_list=$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')
 
 	while [[ $index > 0 ]]; do
 		sub_arg_no=$((COMP_CWORD - index))
@@ -38,7 +40,7 @@ kianidraw_completion() {
 			1)
 				COMPREPLY=($(compgen -W " \
 					config/all \
-					$(kianidraw-get config 2>/dev/null | awk '{print "config/"$0}') \
+					$config_list \
 					" \
 					"$current_word" \
 				))
@@ -60,9 +62,9 @@ kianidraw_completion() {
 			1)
 				COMPREPLY=($(compgen -W " \
 					config/all \
-					$(kianidraw-get config 2>/dev/null | awk '{print "config/"$0}') \
+					$config_list \
 					resources/all \
-					$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}') \
+					$resources_list \
 					" \
 					"$current_word" \
 				))
@@ -75,7 +77,7 @@ kianidraw_completion() {
 			case $sub_arg_no in
 			1)
 				COMPREPLY=($(compgen -W " \
-					$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}') \
+					$resources_list \
 					" \
 					"$current_word" \
 				))
@@ -89,7 +91,7 @@ kianidraw_completion() {
 			1)
 				COMPREPLY=($(compgen -W " \
 					resources/all \
-					$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}') \
+					$resources_list \
 					" \
 					"$current_word" \
 				))
