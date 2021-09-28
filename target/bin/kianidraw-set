@@ -23,16 +23,6 @@ delete_config_line() {
 	mv $INTERNAL_CONFIG.tmp $INTERNAL_CONFIG
 }
 
-check_config_value() {
-	_item=$1
-	_value=$2
-
-	_pattern=$(eval echo \$CONFIG_${_item}_PATTERN)
-	_pattern=${_pattern:-$CONFIG_VALUE_PATTERN}
-
-	expr "$_value" : "$_pattern\$" >/dev/null
-}
-
 case $class in
 config)
 	test -n "$item" || exit_bad_args "$USAGE"
