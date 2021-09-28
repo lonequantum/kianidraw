@@ -5,9 +5,6 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
-item_exists config/input_size_max || \
-exit_error "$MSG_PREFIX: config/input_size_max: please set this item"
-
 move=false
 test X"$1" = X"-m" && {
 	move=true
