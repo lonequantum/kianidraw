@@ -5,6 +5,8 @@ alias kian=kianidraw
 kianidraw_completion() {
 	index=$COMP_CWORD
 	current_word=${COMP_WORDS[$COMP_CWORD]}
+	previous_word=${COMP_WORDS[$((COMP_CWORD - 1))]}
+
 	config_list=$(kianidraw-get config 2>/dev/null | awk '{print "config/"$0}')
 	resources_list=$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')
 
@@ -28,10 +30,18 @@ kianidraw_completion() {
 				return
 				;;
 			2)
-				compopt -o default
+				[ $previous_word != '-m' ] && compopt -o default
 				COMPREPLY=()
 				return
 				;;
+			3)
+				if [ ${COMP_WORDS[$((COMP_CWORD - 2))]} = '-m' ]; then
+					compopt -o default
+					COMPREPLY=()
+					return
+				else
+					break
+				fi;;
 			*)
 				break
 			esac;;
