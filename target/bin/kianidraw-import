@@ -6,8 +6,8 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
 input_size_max=$(kianidraw-get config/input_size_max)
-check_config_value input_size_max $input_size_max \
-|| exit_bad_item_value "$MSG_PREFIX: config/input_size_max"
+check_config_value input_size_max "$input_size_max" \
+|| exit_bad_value "$MSG_PREFIX: config/input_size_max: \"$input_size_max\""
 
 move=false
 test X"$1" = X"-m" && {
@@ -19,7 +19,7 @@ test $# -eq 2 \
 || exit_bad_args "Usage: $PROG_NAME [-m] <resourceName> <file>"
 
 test X$(expr "$1" : "\([_a-zA-Z0-9][-_.a-zA-Z0-9]*\)") = X"$1" >/dev/null \
-|| exit_error "$MSG_PREFIX: \"$1\": bad resource name format"
+|| exit_error "$MSG_PREFIX: \"$1\": bad resource name"
 
 case $1 in
 all)

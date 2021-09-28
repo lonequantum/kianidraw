@@ -10,7 +10,7 @@ USAGE="Usage: $PROG_NAME resources/(all|<resourceName>)"
 test -n "$1" || exit_bad_args "$USAGE"
 
 class=$(expr "$1" : '\([^/]*\)')
-item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
+name=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
 
 convert_xcf_to_pngs() {
 	_infile=$1
@@ -41,19 +41,19 @@ process_resource() {
 
 case $class in
 resources)
-	test -n "$item" || exit_bad_args "$USAGE"
+	test -n "$name" || exit_bad_args "$USAGE"
 
-	test X"$item" = Xall && {
+	test X"$name" = Xall && {
 		kianidraw-get resources | while read r; do
 			process_resource $r
 		done
 		exit
 	}
 
-	item_exists resources/"$item" \
-	|| exit_error "$MSG_PREFIX: resources/\"$item\": not found"
+	item_exists resources/"$name" \
+	|| exit_error "$MSG_PREFIX: resources/\"$name\": not found"
 
-	process_resource $item
+	process_resource $name
 	;;
 *)
 	exit_bad_args "$USAGE"

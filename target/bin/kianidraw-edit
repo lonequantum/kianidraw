@@ -10,16 +10,16 @@ USAGE="Usage: $PROG_NAME resources/<resourceName>"
 test -n "$1" || exit_bad_args "$USAGE"
 
 class=$(expr "$1" : '\([^/]*\)')
-item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
+name=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
 
 case $class in
 resources)
-	test -n "$item" || exit_bad_args "$USAGE"
+	test -n "$name" || exit_bad_args "$USAGE"
 
-	item_exists resources/"$item" \
-	|| exit_error "$MSG_PREFIX: resources/\"$item\": not found"
+	item_exists resources/"$name" \
+	|| exit_error "$MSG_PREFIX: resources/\"$name\": not found"
 
-	gimp $INTERNAL_IN_D/$item.d/$item.xcf &
+	gimp $INTERNAL_IN_D/$name.d/$name.xcf &
 	;;
 *)
 	exit_bad_args "$USAGE"

@@ -17,10 +17,10 @@ CONFIG_duration_PATTERN='[1-9][0-9]\{0,1\}'
 CONFIG_output_fps_PATTERN='[1-9][0-9]\{0,1\}'
 CONFIG_working_fps_PATTERN='[1-9][0-9]\{0,1\}'
 
-exit_bad_item_value() {
+exit_bad_value() {
 	_msg_prefix=$1
 
-	echo "$_msg_prefix: bad item value format, please set it with kianidraw-set" >&2
+	echo "$_msg_prefix: bad value, please set it with kianidraw-set" >&2
 	exit 1
 }
 
@@ -98,10 +98,10 @@ item_exists() {
 }
 
 check_config_value() {
-	_item=$1
+	_name=$1
 	_value=$2
 
-	_pattern=$(eval echo \$CONFIG_${_item}_PATTERN)
+	_pattern=$(eval echo \$CONFIG_${_name}_PATTERN)
 	_pattern=${_pattern:-$CONFIG_VALUE_PATTERN}
 
 	expr "$_value" : "$_pattern\$" >/dev/null
