@@ -2,77 +2,116 @@
 
 alias kian=kianidraw
 
-kian_completion() {
-	case $COMP_CWORD in
-	1)
-		COMPREPLY=($(compgen -W "\
-			new\
-			import\
-			edit\
-			update\
-			get\
-			set\
-			"\
-			"${COMP_WORDS[1]}"\
-		));;
+kianidraw_completion() {
+	index=$COMP_CWORD
+	while [[ $index > 0 ]]; do
+		sub_arg_no=$((COMP_CWORD - index))
+		current_word=${COMP_WORDS[$COMP_CWORD]}
 
-	2)
-		case ${COMP_WORDS[1]} in
-		edit)
-			COMPREPLY=($(compgen -W "\
-				$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')\
-				"\
-				"${COMP_WORDS[2]}"\
-			));;
-		update)
-			COMPREPLY=($(compgen -W "\
-				resources/all\
-				$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')\
-				"\
-				"${COMP_WORDS[2]}"\
-			));;
+		case ${COMP_WORDS[$index]} in
+		new)
+			case $sub_arg_no in
+			1)
+				COMPREPLY=()
+				return
+				;;
+			*)
+				break
+			esac;;
+		import)
+			case $sub_arg_no in
+			1)
+				COMPREPLY=()
+				return
+				;;
+			2)
+				compopt -o default
+				COMPREPLY=()
+				return
+				;;
+			*)
+				break
+			esac;;
 		set)
-			COMPREPLY=($(compgen -W "\
-				config/all\
-				$(kianidraw-get config 2>/dev/null | awk '{print "config/"$0}')\
-				"\
-				"${COMP_WORDS[2]}"\
-			));;
+			case $sub_arg_no in
+			1)
+				COMPREPLY=($(compgen -W " \
+					config/all \
+					$(kianidraw-get config 2>/dev/null | awk '{print "config/"$0}') \
+					" \
+					"$current_word" \
+				))
+				return
+				;;
+			2)
+				COMPREPLY=($(compgen -W " \
+					default \
+					" \
+					"$current_word" \
+				))
+				return
+				;;
+			*)
+				break
+			esac;;
 		get)
-			COMPREPLY=($(compgen -W "\
-				config/all\
-				$(kianidraw-get config 2>/dev/null | awk '{print "config/"$0}')\
-				resources/all\
-				$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}')\
-				"\
-				"${COMP_WORDS[2]}"\
-			))
-		esac;;
-
-	3)
-		case ${COMP_WORDS[1]} in
-		set)
-			COMPREPLY=($(compgen -W "\
-				default\
-				"\
-				"${COMP_WORDS[3]}"\
-			));;
-		import)
-			if [ "${COMP_WORDS[2]}" != "-m" ]; then
-				compopt -o default
-				COMPREPLY=()
-			fi
-		esac;;
-
-	4)
-		case ${COMP_WORDS[1]} in
-		import)
-			if [ "${COMP_WORDS[2]}" = "-m" ]; then
-				compopt -o default
-				COMPREPLY=()
-			fi
+			case $sub_arg_no in
+			1)
+				COMPREPLY=($(compgen -W " \
+					config/all \
+					$(kianidraw-get config 2>/dev/null | awk '{print "config/"$0}') \
+					resources/all \
+					$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}') \
+					" \
+					"$current_word" \
+				))
+				return
+				;;
+			*)
+				break
+			esac;;
+		edit)
+			case $sub_arg_no in
+			1)
+				COMPREPLY=($(compgen -W " \
+					$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}') \
+					" \
+					"$current_word" \
+				))
+				return
+				;;
+			*)
+				break
+			esac;;
+		update)
+			case $sub_arg_no in
+			1)
+				COMPREPLY=($(compgen -W " \
+					resources/all \
+					$(kianidraw-get resources 2>/dev/null | awk '{print "resources/"$0}') \
+					" \
+					"$current_word" \
+				))
+				return
+				;;
+			*)
+				break
+			esac
 		esac
-	esac
+
+		((index--))
+	done
+
+	COMPREPLY=($(compgen -W "\
+		new\
+		import\
+		edit\
+		update\
+		get\
+		set\
+		"\
+		"${COMP_WORDS[$COMP_CWORD]}"\
+	))
 }
 
-complete -F kian_completion kianidraw kian
+complete -F kianidraw_completion kianidraw kian
