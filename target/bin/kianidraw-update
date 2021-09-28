@@ -13,8 +13,8 @@ class=$(expr "$1" : '\([^/]*\)')
 item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
 
 convert_xcf_to_pngs() {
-	infile=$1
-	outfiles_dir=$2
+	_infile=$1
+	_outfiles_dir=$2
 
 	{
 		cat <<END
@@ -26,17 +26,17 @@ def convert(infile, outfiles_dir):
 		pdb.gimp_file_save(img, layer, outfile, outfile)
 	pdb.gimp_image_delete(img)
 END
-		echo "convert(\"$infile\", \"$outfiles_dir\")"
+		echo "convert(\"$_infile\", \"$_outfiles_dir\")"
 		echo "pdb.gimp_quit(1)"
 	} | gimp -i --batch-interpreter=python-fu-eval -b -
 }
 
 process_resource() {
-	resource=$1
+	_resource=$1
 
-	echo "$MSG_PREFIX: processing elements for \"$resource\" …"
-	rm -f $INTERNAL_IN_D/$resource.d/*.png
-	convert_xcf_to_pngs $INTERNAL_IN_D/$resource.d/$resource.xcf $INTERNAL_IN_D/$resource.d
+	echo "$MSG_PREFIX: processing elements for \"$_resource\" …"
+	rm -f $INTERNAL_IN_D/$_resource.d/*.png
+	convert_xcf_to_pngs $INTERNAL_IN_D/$_resource.d/$_resource.xcf $INTERNAL_IN_D/$_resource.d
 }
 
 case $class in

@@ -16,9 +16,9 @@ item=$(expr "$1" : '[^/]*/\(.*\)' | sed 's/\//\\\//g')
 value=$2
 
 delete_config_line() {
-	line=$1
+	_line=$1
 
-	awk "!/$line/ {print}" $INTERNAL_CONFIG > $INTERNAL_CONFIG.tmp
+	awk "!/$_line/ {print}" $INTERNAL_CONFIG > $INTERNAL_CONFIG.tmp
 	rm $INTERNAL_CONFIG
 	mv $INTERNAL_CONFIG.tmp $INTERNAL_CONFIG
 }
