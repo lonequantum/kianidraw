@@ -28,7 +28,7 @@ check_config_value() {
 	_value=$2
 
 	_pattern=$(eval echo \$CONFIG_${_item}_PATTERN)
-	_pattern=${_pattern:-$CONFIG_PROP_VALUE_PATTERN}
+	_pattern=${_pattern:-$CONFIG_VALUE_PATTERN}
 
 	expr "$_value" : "$_pattern\$" >/dev/null
 }
@@ -49,7 +49,7 @@ config)
 		esac
 	}
 
-	expr "$item" : "$CONFIG_PROP_NAME_PATTERN\$" >/dev/null \
+	expr "$item" : "$CONFIG_NAME_PATTERN\$" >/dev/null \
 	|| exit_error "$MSG_PREFIX: config/\"$item\": bad property name format"
 
 	old_value=$(kianidraw-get config/$item 2>/dev/null)
