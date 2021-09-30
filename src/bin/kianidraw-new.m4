@@ -1,7 +1,7 @@
 changequote(«,»)dnl
 include(«common.m4»)dnl
 #!/bin/sh
-. M4_LIB_DIR/kianidraw-common
+. __LIB_DIR/kianidraw-common
 
 PROG_NAME=$(basename $0)
 
