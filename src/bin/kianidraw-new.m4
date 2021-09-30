@@ -1,3 +1,5 @@
+changequote(«,»)dnl
+include(«common.m4»)dnl
 #!/bin/sh
 PROG_NAME=$(basename $0)
 . /usr/local/lib/kianidraw-common

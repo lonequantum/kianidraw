@@ -1,3 +1,5 @@
+changequote(«,»)dnl
+include(«common.m4»)dnl
 #!/bin/sh
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
