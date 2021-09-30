@@ -1,9 +1,10 @@
 changequote(«,»)dnl
 include(«common.m4»)dnl
 #!/bin/sh
+. M4_LIB_DIR/kianidraw-common
+
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
-. M4_LIB_DIR/kianidraw-common
 
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
