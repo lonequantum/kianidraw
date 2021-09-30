@@ -22,8 +22,7 @@ for dir in bin lib etc; do
 			ln -s "$(pwd)"/$file "$dest_dir"
 		else
 			cp $file "$dest_dir"
-		fi
-		echo $dest_dir/$(basename $file)
+		fi && echo $dest_dir/$(basename $file)
 	done
 done
 
