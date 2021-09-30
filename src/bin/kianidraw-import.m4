@@ -3,7 +3,7 @@ include(«common.m4»)dnl
 #!/bin/sh
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
-. /usr/local/lib/kianidraw-common
+. M4_LIB_DIR/kianidraw-common
 
 is_structure_ok || exit_bad_location "$PROG_NAME"
 

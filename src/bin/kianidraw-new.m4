@@ -2,7 +2,7 @@ changequote(«,»)dnl
 include(«common.m4»)dnl
 #!/bin/sh
 PROG_NAME=$(basename $0)
-. /usr/local/lib/kianidraw-common
+. M4_LIB_DIR/kianidraw-common
 
 test -n "$1" || exit_bad_args "Usage: $PROG_NAME <projectName>"
 
