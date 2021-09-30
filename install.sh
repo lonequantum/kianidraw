@@ -1,5 +1,5 @@
 #!/bin/sh
-include(EDITME)dnl
+. ./EDITME
 
 test $(id -u) -eq 0 || {
 	echo "permission denied (are you root?)" >&2
