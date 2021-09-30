@@ -1,12 +1,5 @@
 #!/bin/sh
-bin_DIR=/usr/local/bin
-lib_DIR=/usr/local/lib
-etc_DIR=/usr/local/etc
-
-dev_mode=true
-
-use_bash=true
-BASH_COMP_DIR=/etc/bash_completion.d
+include(EDITME)dnl
 
 test $(id -u) -eq 0 || {
 	echo "permission denied (are you root?)" >&2
