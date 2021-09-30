@@ -1,5 +1,7 @@
+changequote(«,»)dnl
+define(M4_ETC_DIR, «syscmd(awk '/^etc_DIR=/ {printf("%s", $«»2)}' FS== EDITME)»)dnl
 #!/bin/sh
-SYSTEM_CONFIG=/usr/local/etc/kianidraw.config
+SYSTEM_CONFIG=M4_ETC_DIR/kianidraw.config
 INTERNAL_CONFIG=.kianidraw/config
 INTERNAL_IN_D=.kianidraw/in
 EXTERNAL_IN_D=in
