@@ -1,4 +1,5 @@
 divert(-1)
+changequote(«,»)
 
 define(tab,
 	«ifelse($#, 0,
