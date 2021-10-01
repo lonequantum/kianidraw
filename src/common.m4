@@ -8,10 +8,10 @@ define(tab,
 			«	tab(eval($1 - 1))»)»)»)
 
 define(__ETC_DIR,
-	«syscmd(awk '/^etc_DIR=/ {printf("%s", $«»2)}' FS== EDITME)»)
+	«syscmd(awk -v FS== '/^etc_DIR=/ {printf("%s", $«»2)}' EDITME)»)
 
 define(__LIB_DIR,
-	«syscmd(awk '/^lib_DIR=/ {printf("%s", $«»2)}' FS== EDITME)»)
+	«syscmd(awk -v FS== '/^lib_DIR=/ {printf("%s", $«»2)}' EDITME)»)
 
 define(__check_config_value_or_exit_error,
 	«check_config_value $1 "$2" \
