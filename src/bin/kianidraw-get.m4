@@ -32,7 +32,7 @@ config)
 		exit
 	}
 
-	value=$(kianidraw-get config/all | awk -F = "/^$name=/ {print \$2}")
+	value=$(kianidraw-get config/all | awk -v FS== "/^$name=/ {print \$2}")
 	if test -n "$value"; then
 		echo $value
 	else
