@@ -20,15 +20,9 @@ convert_xcf_to_pngs() {
 
 	{
 		cat <<END
-def convert(infile, outfiles_dir):
-	img = pdb.gimp_file_load(infile, infile)
-	for layer in img.layers:
-		outfile = outfiles_dir + "/" + layer.name + ".png"
-		print(layer.name)
-		pdb.gimp_file_save(img, layer, outfile, outfile)
-	pdb.gimp_image_delete(img)
+include(src/convert_xcf_to_pngs.py)dnl
 END
-		echo "convert(\"$_infile\", \"$_outfiles_dir\")"
+		echo "convert_xcf_to_pngs(\"$_infile\", \"$_outfiles_dir\")"
 		echo "pdb.gimp_quit(1)"
 	} | gimp -i --batch-interpreter=python-fu-eval -b -
 }
