@@ -1,5 +1,4 @@
-changequote(«,»)dnl
-include(«common.m4»)dnl
+changequote(«,»)include(«common.m4»)dnl
 #!/bin/sh
 . __LIB_DIR/kianidraw-common
 

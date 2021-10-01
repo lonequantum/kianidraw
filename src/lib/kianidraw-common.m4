@@ -1,5 +1,4 @@
-changequote(«,»)dnl
-include(«common.m4»)dnl
+changequote(«,»)include(«common.m4»)dnl
 #!/bin/sh
 SYSTEM_CONFIG=__ETC_DIR/kianidraw.config
 INTERNAL_CONFIG=.kianidraw/config
