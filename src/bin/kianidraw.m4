@@ -1,4 +1,4 @@
-changequote(«,»)include(«common.m4»)dnl
+changequote(«,»)include(«src/common.m4»)dnl
 #!/bin/sh
 PROG_NAME=$(basename $0)
 
