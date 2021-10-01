@@ -9,7 +9,7 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
 input_size_max=$(kianidraw-get config/input_size_max)
-__check_conf_or_exit_err(input_size_max, $input_size_max, 0)
+__check_config_value_or_exit_error(input_size_max, $input_size_max, 0)
 
 move=false
 test X"$1" = X"-m" && {

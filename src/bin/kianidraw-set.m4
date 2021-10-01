@@ -56,7 +56,7 @@ config)
 		echo "$MSG_PREFIX: deleted \"$name\" from local config"
 		;;
 	*)
-		__check_conf_or_exit_err($name, $value, 2)
+		__check_config_value_or_exit_error($name, $value, 2)
 
 		delete_config_line "^$name=$old_value\$"
 		echo "$name=$value" >> $INTERNAL_CONFIG

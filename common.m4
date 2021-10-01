@@ -12,7 +12,7 @@ define(__ETC_DIR,
 define(__LIB_DIR,
 	«syscmd(awk '/^lib_DIR=/ {printf("%s", $«»2)}' FS== EDITME)»)
 
-define(__check_conf_or_exit_err,
+define(__check_config_value_or_exit_error,
 	«check_config_value $1 "$2" \
 tab($3)«»|| exit_error "$MSG_PREFIX: config/$1: \"$2\": bad value"»)
 
