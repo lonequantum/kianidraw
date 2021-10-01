@@ -9,8 +9,7 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
 input_size_max=$(kianidraw-get config/input_size_max)
-check_config_value input_size_max "$input_size_max" \
-|| exit_error "$MSG_PREFIX: config/input_size_max: \"$input_size_max\": bad value"
+__check_conf_or_exit_err(input_size_max, $input_size_max, 0)
 
 move=false
 test X"$1" = X"-m" && {
