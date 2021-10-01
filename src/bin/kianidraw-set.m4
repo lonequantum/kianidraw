@@ -20,7 +20,7 @@ value=$2
 delete_config_line() {
 	_line=$1
 
-	awk "!/$_line/ {print}" $INTERNAL_CONFIG > $INTERNAL_CONFIG.tmp
+	awk "!/$_line/" $INTERNAL_CONFIG > $INTERNAL_CONFIG.tmp
 	rm $INTERNAL_CONFIG
 	mv $INTERNAL_CONFIG.tmp $INTERNAL_CONFIG
 }

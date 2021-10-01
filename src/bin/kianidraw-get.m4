@@ -20,7 +20,7 @@ case $class in
 config)
 	test X"$name" = Xall && {
 		cat $INTERNAL_CONFIG $SYSTEM_CONFIG \
-		| awk "/^$CONFIG_NAME_PATTERN_ERE=$CONFIG_VALUE_PATTERN_ERE/ {print}" \
+		| awk "/^$CONFIG_NAME_PATTERN_ERE=$CONFIG_VALUE_PATTERN_ERE/" \
 		| nl -s = \
 		| sort -u -t = -k2,2 \
 		| cut -d = -f2-
