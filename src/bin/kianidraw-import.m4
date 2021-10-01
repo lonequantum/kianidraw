@@ -19,7 +19,7 @@ test X"$1" = X"-m" && {
 test $# -eq 2 \
 || exit_bad_args "Usage: $PROG_NAME [-m] <resourceName> <file>"
 
-test X$(expr "$1" : "\([_a-zA-Z0-9][-_.a-zA-Z0-9]*\)") = X"$1" >/dev/null \
+test X$(expr "$1" : "$RESOURCE_NAME_PATTERN") = X"$1" >/dev/null \
 || exit_error "$MSG_PREFIX: \"$1\": bad resource name"
 
 case $1 in
