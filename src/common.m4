@@ -16,8 +16,8 @@ define(__LIB_DIR,
 define(__DEV_MODE,
 	«syscmd(awk -v FS== '/^dev_mode=/ {printf("%s", $«»2)}' EDITME)»)
 
-define(__check_config_value_or_exit_error,
-	«check_config_value $1 "$2" \
+define(__config_value_ok_or_die,
+	«is_config_value_ok $1 "$2" \
 tab($3)«»|| exit_error "$MSG_PREFIX: config/$1: \"$2\": bad value"»)
 
 divert(0)dnl

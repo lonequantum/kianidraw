@@ -92,7 +92,7 @@ item_exists() {
 	kianidraw-get "$_item" >/dev/null 2>&1
 }
 
-check_config_value() {
+is_config_value_ok() {
 	_name=$1
 	_value=$2
 
