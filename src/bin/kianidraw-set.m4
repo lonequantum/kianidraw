@@ -41,7 +41,7 @@ config)
 		esac
 	}
 
-	expr "$name" : "$CONFIG_NAME_PATTERN\$" >/dev/null \
+	expr "$name" : "$ITEM_NAME_PATTERN\$" >/dev/null \
 	|| exit_error "$MSG_PREFIX: config/\"$name\": bad name"
 
 	old_value=$(kianidraw-get config/$name 2>/dev/null)
