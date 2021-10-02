@@ -5,7 +5,7 @@ INTERNAL_CONFIG=.kianidraw/config
 INTERNAL_IN_D=.kianidraw/in
 EXTERNAL_IN_D=in
 
-RESOURCE_NAME_PATTERN='\([_a-zA-Z0-9][-_.a-zA-Z0-9]*\)'
+RESOURCE_NAME_PATTERN='[_a-zA-Z0-9][-_.a-zA-Z0-9]*'
 
 CONFIG_NAME_PATTERN='[-_0-9a-zA-Z]\{1,\}'
 CONFIG_NAME_PATTERN_ERE='[-_0-9a-zA-Z]+'
