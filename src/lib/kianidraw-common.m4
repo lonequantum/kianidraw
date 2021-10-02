@@ -7,9 +7,7 @@ EXTERNAL_IN_D=in
 
 ITEM_NAME_PATTERN='[_a-zA-Z0-9][-_.a-zA-Z0-9]*'
 
-CONFIG_VALUE_PATTERN='[-_0-9a-zA-Z]\{1,\}[-_ 0-9a-zA-Z]*'
-CONFIG_VALUE_PATTERN_ERE='[-_0-9a-zA-Z]+[-_ 0-9a-zA-Z]*'
-
+CONFIG_VALUE_PATTERN='[-_.a-zA-Z0-9][-_. a-zA-Z0-9]*'
 CONFIG_input_size_max_PATTERN='[1-9][0-9]\{2,\}x[1-9][0-9]\{2,\}'
 CONFIG_output_size_max_PATTERN='[1-9][0-9]\{2,\}x[1-9][0-9]\{2,\}'
 CONFIG_working_size_max_PATTERN='[1-9][0-9]\{2,\}x[1-9][0-9]\{2,\}'
