@@ -20,4 +20,8 @@ define(__config_value_ok_or_die,
 	«is_config_value_ok $1 "$2" \
 tab($3)«»|| exit_error "$MSG_PREFIX: config/$1: \"$2\": bad value"»)
 
+define(__item_name_ok_or_die,
+	«is_item_name_ok "$1" \
+tab($2)«»|| exit_error "$MSG_PREFIX: \"$1\": bad item name"»)
+
 divert(0)dnl

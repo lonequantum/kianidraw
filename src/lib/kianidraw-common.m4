@@ -87,6 +87,12 @@ item_exists() {
 	kianidraw-get "$_item" >/dev/null 2>&1
 }
 
+is_item_name_ok() {
+	_name=$1
+
+	expr "$_name" : "$ITEM_NAME_PATTERN\$" >/dev/null
+}
+
 is_config_value_ok() {
 	_name=$1
 	_value=$2
