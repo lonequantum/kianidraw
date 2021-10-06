@@ -11,19 +11,13 @@ for dir in bin lib etc; do
 	rm -f "$dest_dir"/kianidraw*
 
 	for file in target/$dir/kianidraw*; do
-		if $dev_mode; then
-			ln -s "$(pwd)"/$file "$dest_dir"
-		else
-			cp $file "$dest_dir"
-		fi && echo $dest_dir/$(basename $file)
+		cp $file "$dest_dir" \
+		&& echo $dest_dir/$(basename $file)
 	done
 done
 
 if $use_bash; then
 	rm -f "$BASH_COMP_DIR"/kianidraw
-	if $dev_mode; then
-		ln -s "$(pwd)"/kianidraw.bash "$BASH_COMP_DIR"/kianidraw
-	else
-		cp kianidraw.bash "$BASH_COMP_DIR"/kianidraw
-	fi && echo $BASH_COMP_DIR/kianidraw
+	cp kianidraw.bash "$BASH_COMP_DIR"/kianidraw \
+	&& echo $BASH_COMP_DIR/kianidraw
 fi
