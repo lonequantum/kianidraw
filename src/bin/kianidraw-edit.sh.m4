@@ -29,7 +29,7 @@ timeline)
 	editor=$(kianidraw-get config/editor)
 	__config_value_ok_or_die(editor, $editor, 1)
 
-	$editor "$TIMELINE"
+	$editor "$EXTERNAL_TIMELINE"
 	;;
 *)
 	exit_bad_args "$USAGE"

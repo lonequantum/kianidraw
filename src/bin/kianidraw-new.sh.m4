@@ -10,6 +10,6 @@ mkdir "$1" || exit 1
 
 cd "$1"
 
-mkdir -p $INTERNAL_IN_D $EXTERNAL_IN_D \
+mkdir -p $INTERNAL_IN_D $EXTERNAL_IN_D $INTERNAL_TIMELINE_D \
 && > $INTERNAL_CONFIG \
 && echo "$PROG_NAME: created project \"$1\", remember to cd into it"
