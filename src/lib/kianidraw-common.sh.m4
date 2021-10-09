@@ -2,6 +2,7 @@ include(src/common.m4)dnl
 #!/bin/sh
 SYSTEM_CONFIG=__ETC_DIR/kianidraw.config
 INTERNAL_CONFIG=.kianidraw/config
+TIMELINE=timeline
 INTERNAL_IN_D=.kianidraw/in
 EXTERNAL_IN_D=in
 
