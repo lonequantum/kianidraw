@@ -101,6 +101,7 @@ kianidraw_completion() {
 			case $sub_arg_no in
 			1)
 				COMPREPLY=($(compgen -W " \
+					timeline \
 					resources/all \
 					$resources_list \
 					" \

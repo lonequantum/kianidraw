@@ -7,7 +7,9 @@ MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 
 is_structure_ok || exit_bad_location "$PROG_NAME"
 
-USAGE="Usage: $PROG_NAME resources/(all|<resourceName>)"
+USAGE="\
+Usage: $PROG_NAME resources/(all|<resourceName>)
+       $PROG_NAME timeline"
 
 test -n "$1" || exit_bad_args "$USAGE"
 
@@ -50,6 +52,9 @@ resources)
 	|| exit_error "$MSG_PREFIX: resources/\"$name\": not found"
 
 	process_resource $name
+	;;
+timeline)
+	#kianidraw-parse $EXTERNAL_TIMELINE $INTERNAL_TIMELINE_D
 	;;
 *)
 	exit_bad_args "$USAGE"
