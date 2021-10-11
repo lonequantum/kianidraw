@@ -54,8 +54,7 @@ resources)
 	process_resource $name
 	;;
 timeline)
-	#kianidraw-parse $EXTERNAL_TIMELINE $INTERNAL_TIMELINE_D
-	;;
+	kianidraw-parse $EXTERNAL_TIMELINE $INTERNAL_TIMELINE_D;;
 *)
 	exit_bad_args "$USAGE"
 esac
