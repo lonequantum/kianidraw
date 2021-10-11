@@ -13,11 +13,11 @@ ITEM_NAME_PATTERN='[_a-zA-Z0-9][-_.a-zA-Z0-9]*'
 
 CONFIG_VALUE_PATTERN='[-_.a-zA-Z0-9][-_. a-zA-Z0-9]*'
 CONFIG_input_size_max_PATTERN='[1-9][0-9]\{2,\}x[1-9][0-9]\{2,\}'
-CONFIG_output_size_max_PATTERN='[1-9][0-9]\{2,\}x[1-9][0-9]\{2,\}'
-CONFIG_working_size_max_PATTERN='[1-9][0-9]\{2,\}x[1-9][0-9]\{2,\}'
+CONFIG_final_size_max_PATTERN='[1-9][0-9]\{2,\}x[1-9][0-9]\{2,\}'
+CONFIG_testing_size_max_PATTERN='[1-9][0-9]\{2,\}x[1-9][0-9]\{2,\}'
 CONFIG_duration_PATTERN='[1-9][0-9]\{0,1\}'
-CONFIG_output_fps_PATTERN='[1-9][0-9]\{0,1\}'
-CONFIG_working_fps_PATTERN='[1-9][0-9]\{0,1\}'
+CONFIG_final_fps_PATTERN='[1-9][0-9]\{0,1\}'
+CONFIG_testing_fps_PATTERN='[1-9][0-9]\{0,1\}'
 
 exit_bad_location() {
 	_msg_prefix=$1
