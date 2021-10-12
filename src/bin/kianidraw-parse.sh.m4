@@ -5,8 +5,8 @@ include(src/common.m4)dnl
 PROG_NAME=$(basename $0)
 MSG_PREFIX="$PROG_NAME[$(basename "$(pwd)")]"
 
-USAGE="$PROG_NAME <kalFile> <outputDir>"
-test $# -eq 2 || exit_bad_args "$USAGE"
+USAGE="Usage: $PROG_NAME <kalFile> <outputDir> <duration> <fps>"
+test $# -eq 4 || exit_bad_args "$USAGE"
 
 test -r "$1" \
 || exit_error "$MSG_PREFIX: \"$1\": unreadable file"

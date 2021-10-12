@@ -54,7 +54,16 @@ resources)
 	process_resource $name
 	;;
 timeline)
-	kianidraw-parse $EXTERNAL_TIMELINE $INTERNAL_TIMELINE_D;;
+	work_mode=$(kianidraw-get config/work_mode)
+	item_exists config/${work_mode}_fps \
+	|| exit_error "$MSG_PREFIX: config/work_mode: \"$work_mode\" is not a valid work mode"
+
+	fps=$(kianidraw-get config/${work_mode}_fps)
+	__config_value_ok_or_die(${work_mode}_fps, $fps, 1)
+
+	kianidraw-parse $EXTERNAL_TIMELINE $INTERNAL_TIMELINE_D \
+		$(kianidraw-get config/duration) $(kianidraw-get config/${work_mode}_fps)
+	;;
 *)
 	exit_bad_args "$USAGE"
 esac
