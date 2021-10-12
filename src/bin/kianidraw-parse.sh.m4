@@ -13,3 +13,8 @@ test -r "$1" \
 test -w "$2" \
 || exit_error "$PROG_NAME: \"$2\": unwritable directory"
 
+is_config_value_ok duration "$3" \
+|| exit_error "$PROG_NAME: \"$3\": bad duration value"
+
+is_config_value_ok final_fps "$4" \
+|| exit_error "$PROG_NAME: \"$4\": bad fps value"
