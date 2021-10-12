@@ -62,7 +62,7 @@ timeline)
 	__config_value_ok_or_die(${work_mode}_fps, $fps, 1)
 
 	kianidraw-parse $EXTERNAL_TIMELINE $INTERNAL_TIMELINE_D \
-		$(kianidraw-get config/duration) $(kianidraw-get config/${work_mode}_fps)
+		$(kianidraw-get config/duration) "$fps"
 	;;
 *)
 	exit_bad_args "$USAGE"
