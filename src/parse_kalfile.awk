@@ -9,6 +9,12 @@ function replace_aliases(line) {
 	return new
 }
 
+/^[[:space:]]*$/ || «substr»($1, 1, 1) == "#" {next}
+
+$1 != "ALIAS" {
+	$0 = replace_aliases($0)
+}
+
 $1 == "ALIAS" {
 	aliases[$2] = $3
 }
@@ -16,8 +22,4 @@ $1 == "ALIAS" {
 $1 == "AT" {
 	sub("%", "", $2)
 	start_frame = total_frames * $2/100 + 1
-}
-
-$1 == "REFXY" {
-	command = replace_aliases($0)
 }
