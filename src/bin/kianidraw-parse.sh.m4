@@ -19,11 +19,9 @@ is_config_value_ok duration "$3" \
 is_config_value_ok final_fps "$4" \
 || exit_error "$PROG_NAME: \"$4\": bad fps value"
 
-cp "$1" "$2"/"$1".tmp
-cd "$2"
-
-awk -v DURATION=$3 -v FPS=$4 '
+{
+	cd "$2"
+	awk -v DURATION=$3 -v FPS=$4 '
 include(src/parse_kalfile.awk)dnl
-' "$1".tmp
-
-rm "$1".tmp
+'
+} < "$1"
