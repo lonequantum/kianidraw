@@ -21,7 +21,8 @@ is_config_value_ok final_fps "$4" \
 
 {
 	cd "$2"
-	awk -v DURATION=$3 -v FPS=$4 '
+	awk -v DURATION=$3 -v FPS=$4 \
+'
 include(src/parse_kalfile.awk)dnl
 '
 } < "$1"
