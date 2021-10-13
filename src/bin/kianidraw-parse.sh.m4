@@ -21,7 +21,8 @@ is_config_value_ok final_fps "$4" \
 
 {
 	cd "$2"
-	awk -v DURATION=$3 -v FPS=$4 \
+	rm -rf *
+	awk -v TOTAL_FRAMES=$(expr $3 \* $4) \
 '
 include(src/parse_kalfile.awk.m4)dnl
 '
