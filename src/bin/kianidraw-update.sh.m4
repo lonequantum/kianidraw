@@ -21,6 +21,7 @@ convert_xcf_to_pngs() {
 	_outfiles_dir=$2
 
 	{
+		echo "item_name_pattern = \"$ITEM_NAME_PATTERN\""
 		cat <<END
 include(src/convert_xcf_to_pngs.py)dnl
 END
