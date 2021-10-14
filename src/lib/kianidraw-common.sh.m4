@@ -75,6 +75,7 @@ is_structure_ok() {
 	test -d "$_dir"/$INTERNAL_IN_D       || return 1
 	test -d "$_dir"/$EXTERNAL_IN_D       || return 1
 	test -d "$_dir"/$INTERNAL_TIMELINE_D || return 1
+	test -f "$_dir"/$EXTERNAL_TIMELINE   || return 1
 	test -f "$_dir"/$INTERNAL_CONFIG     || return 1
 	find "$_dir" -type d | are_dir_perms_ok -  || return 1
 	find "$_dir" -type f | are_file_perms_ok - || return 1
