@@ -1,4 +1,4 @@
-include(src/common.m4)dnl
+include(src/common.M4)dnl
 #!/bin/sh
 . __LIB_DIR/kianidraw-common
 
