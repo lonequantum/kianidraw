@@ -1,4 +1,4 @@
-include(src/common.m4)dnl
+include(src/common.M4)dnl
 #!/bin/sh
 SYSTEM_CONFIG=__ETC_DIR/kianidraw.config
 INTERNAL_CONFIG=.kianidraw/config
