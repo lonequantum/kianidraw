@@ -12,9 +12,6 @@ cd "$1"
 
 mkdir -p $INTERNAL_IN_D $EXTERNAL_IN_D $INTERNAL_TIMELINE_D \
 && > $INTERNAL_CONFIG \
-&& {
-	cat <<END
-# KAL 0.1
-END
-} > $EXTERNAL_TIMELINE \
+&& > $EXTERNAL_TIMELINE \
+&& kianidraw-set timeline default >/dev/null \
 && echo "$PROG_NAME: created project \"$1\", remember to cd into it"
