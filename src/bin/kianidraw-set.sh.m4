@@ -9,7 +9,8 @@ is_structure_ok || exit_bad_location "$PROG_NAME"
 
 USAGE="\
 Usage: $PROG_NAME config/<name> <value>|default
-       $PROG_NAME config/all default"
+       $PROG_NAME config/all default
+       $PROG_NAME timeline default"
 
 test $# -eq 2 || exit_bad_args "$USAGE"
 
@@ -59,6 +60,23 @@ config)
 		delete_config_line "^$name=$old_value\$"
 		echo "$name=$value" >> $INTERNAL_CONFIG
 		echo "$MSG_PREFIX: updated local config with \"$name=$value\""
+	esac
+	;;
+timeline)
+	test -z "$name" || exit_bad_args "$USAGE"
+
+	case $value in
+	default)
+		{
+			cat <<END
+# KAL 0.1
+END
+		} > $EXTERNAL_TIMELINE
+		echo "$MSG_PREFIX: emptied timeline"
+		exit
+		;;
+	*)
+		exit_bad_args "$USAGE"
 	esac
 	;;
 *)
