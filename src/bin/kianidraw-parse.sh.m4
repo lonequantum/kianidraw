@@ -19,6 +19,7 @@ is_config_value_ok duration "$3" \
 is_config_value_ok final_fps "$4" \
 || exit_error "$PROG_NAME: \"$4\": bad fps value"
 
+echo "$PROG_NAME: processing elements of timeline…"
 {
 	cd "$2"
 	rm -rf *
