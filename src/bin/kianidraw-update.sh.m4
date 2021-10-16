@@ -33,7 +33,7 @@ END
 process_resource() {
 	_resource=$1
 
-	echo "$MSG_PREFIX: processing elements for \"$_resource\" …"
+	echo "$MSG_PREFIX: processing elements of \"$_resource\" …"
 	rm -f $INTERNAL_IN_D/$_resource.d/*.png
 	convert_xcf_to_pngs $INTERNAL_IN_D/$_resource.d/$_resource.xcf $INTERNAL_IN_D/$_resource.d
 }
