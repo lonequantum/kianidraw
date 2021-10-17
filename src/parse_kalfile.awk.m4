@@ -61,6 +61,34 @@ function percent_to_frame (percent) {
 	return int(TOTAL_FRAMES * percent/100) + 1
 }
 
+function Process_components () {
+	if (Item == "") {
+		print "line "NR": error: no ITEM defined"
+		exit 1
+	}
+
+	split($0, tmp, "\"")
+	if (tmp[3] !~ "^[[:space:]]*$") {
+		n = percent_to_frame(tmp[3]) - Frame + 1
+		if (n < 1) {
+			print "line "NR": error: cannot define values towards the past"
+			exit 1
+		}
+	} else
+		n = TOTAL_FRAMES - Frame + 2
+
+	sav1 = $1
+	for (name in COMP_INDEXES)
+		sub(name, "$"COMP_INDEXES[name] , $1)
+
+	for (i = 0; i < n; i++) {
+		value = yield("mvalues "tmp[2]" "n, (i == 0 ? 1 : ""))
+		To_save[i] = make_set($1"="value, Get_set(Frame + i))
+	}
+
+	Save(n, sav1, tmp[2])
+}
+
 /^[[:space:]]*$/ || «substr»($1, 1, 1) == "#" {
 	next
 }
@@ -106,31 +134,39 @@ $1 == "STACK" {
 }
 
 $1 ~ "^("COMPONENTS")(=("COMPONENTS"))*$" {
-	if (Item == "") {
-		print "line "NR": error: no ITEM defined"
-		exit 1
-	}
+	Process_components()
+	next
+}
 
-	split($0, tmp, "\"")
-	if (tmp[3] !~ "^[[:space:]]*$") {
-		n = percent_to_frame(tmp[3]) - Frame + 1
-		if (n < 1) {
-			print "line "NR": error: cannot define values towards the past"
-			exit 1
-		}
-	} else
-		n = TOTAL_FRAMES - Frame + 2
+$1 == "_RCXY" {
+	sav3 = $3
 
-	sav1 = $1
-	for (name in COMP_INDEXES)
-		sub(name, "$"COMP_INDEXES[name] , $1)
+	$0 = "X=NEWX \"constant "$2"\""
+	Process_components()
+	$0 = "Y=NEWY \"constant "sav3"\""
+	Process_components()
 
-	for (i = 0; i < n; i++) {
-		value = yield("mvalues "tmp[2]" "n, (i == 0 ? 1 : ""))
-		To_save[i] = make_set($1"="value, Get_set(Frame + i))
-	}
+	next
+}
 
-	Save(n, sav1, tmp[2])
+$1 == "_CXY" {
+	sav3 = $3
+
+	$0 = "X \"constant "$2"\""
+	Process_components()
+	$0 = "Y \"constant "sav3"\""
+	Process_components()
+
+	next
+}
+
+$1 == "_CNXY" {
+	sav3 = $3
+
+	$0 = "NEWX \"constant "$2"\""
+	Process_components()
+	$0 = "NEWY \"constant "sav3"\""
+	Process_components()
 
 	next
 }
