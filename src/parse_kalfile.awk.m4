@@ -142,7 +142,7 @@ $1 == "STACK" {
 	$1 = ""
 	gsub("[[:space:]]+", ",", $0)
 
-	printf("%d\t%s", Frame, «substr»($0, 2)) >> "stack"
+	printf("%d\t%s\n", Frame, «substr»($0, 2)) >> "stack"
 
 	next
 }
