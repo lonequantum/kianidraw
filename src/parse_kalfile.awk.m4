@@ -10,42 +10,49 @@ BEGIN {
 	for (name in COMP_INDEXES)
 		COMPONENTS = COMPONENTS""(++i == 1 ? "" : "|" )""name
 
-	frame = 1
+	Frame = 1
 }
 
 function yield (command, restart) {
 	if (restart != "")
 		close(command)
+
 	(command) | getline result
+
 	return result
 }
 
-function _save (len_to_save, what) {
-	tmp_file = path".tmp"
+function Save (len_to_save, components, command) {
+	tmp_file = Path".tmp"
 
-	system("awk \x27NR < "frame"\x27 "path" > "tmp_file)
+	system("awk \x27NR < "Frame"\x27 "Path" > "tmp_file)
+
 	for (i = 0; i < len_to_save; i++)
-		print to_save[i] >> tmp_file
-	system("awk \x27NR >= "(frame + len_to_save)"\x27 "path" >> "tmp_file)
+		print To_save[i] >> tmp_file
+
+	system("awk \x27NR >= "(Frame + len_to_save)"\x27 "Path" >> "tmp_file)
 
 	close(tmp_file)
-	system("mv -f "tmp_file" "path)
-	print item", "what", frames "frame" to "(frame + len_to_save - 1)
+	system("mv -f "tmp_file" "Path)
+
+	print Item", "components", "command", frames "Frame" to "(Frame + len_to_save - 1)
 }
 
-function _get_set (line_number) {
-	return yield("awk -v OFS=\x27\t\x27 \x27NR == "line_number"\x27 "path, 1)
+function Get_set (line_number) {
+	return yield("awk -v OFS=\x27\t\x27 \x27NR == "line_number"\x27 "Path, 1)
 }
 
-function make_set (what, from) {
+function make_set (changes, from) {
 	if (from == "")
 		from = DEFAULT_SET
-	return yield("echo \""from"\" | awk -v OFS=\x27\t\x27 \x27{"what"; print $0}\x27", 1)
+
+	return yield("echo \""from"\" | awk -v OFS=\x27\t\x27 \x27{"changes"; print $0}\x27", 1)
 }
 
 function percent_to_frame (percent) {
 	gsub(/[^0-9.-]/, "", percent)
 	percent = int(percent)
+
 	if (percent < 0 || percent > 100) {
 		print "line "NR": error: "percent": invalid percentage"
 		exit 1
@@ -59,30 +66,31 @@ function percent_to_frame (percent) {
 }
 
 {
-	for (alias in aliases)
-		gsub(alias, aliases[alias], $0)
+	for (alias in Aliases)
+		gsub(alias, Aliases[alias], $0)
 }
 
 $1 == "ALIAS" {
-	aliases[$2] = $3
+	Aliases[$2] = $3
 	next
 }
 
 $1 == "AT" {
-	frame = percent_to_frame($2)
+	Frame = percent_to_frame($2)
 	next
 }
 
 $1 == "ITEM" {
-	item = $2
-	path = $2".srt"
+	Item = $2
+	Path = $2".srt"
 
-	if (system("test -f "path) != 0) {
-		system("mkdir -p $(dirname "path"); > "path)
-		i = TOTAL_FRAMES
-		while (i-- >= 0)
-			print DEFAULT_SET >> path
-		close(path)
+	if (system("test -f "Path) != 0) {
+		system("mkdir -p $(dirname "Path"); > "Path)
+
+		for (i = TOTAL_FRAMES; i >= 0; i--)
+			print DEFAULT_SET >> Path
+
+		close(Path)
 	}
 
 	next
@@ -91,25 +99,27 @@ $1 == "ITEM" {
 $1 == "STACK" {
 	$1 = ""
 	gsub("[[:space:]]+", ",", $0)
-	printf("%d\t%s", frame, «substr»($0, 2)) >> "stack"
+
+	printf("%d\t%s", Frame, «substr»($0, 2)) >> "stack"
+
 	next
 }
 
 $1 ~ "^("COMPONENTS")(=("COMPONENTS"))*$" {
-	if (item == "") {
+	if (Item == "") {
 		print "line "NR": error: no ITEM defined"
 		exit 1
 	}
 
 	split($0, tmp, "\"")
 	if (tmp[3] !~ "^[[:space:]]*$") {
-		n = percent_to_frame(tmp[3]) - frame + 1
+		n = percent_to_frame(tmp[3]) - Frame + 1
 		if (n < 1) {
 			print "line "NR": error: cannot define values towards the past"
 			exit 1
 		}
 	} else
-		n = TOTAL_FRAMES - frame + 2
+		n = TOTAL_FRAMES - Frame + 2
 
 	sav1 = $1
 	for (name in COMP_INDEXES)
@@ -117,9 +127,10 @@ $1 ~ "^("COMPONENTS")(=("COMPONENTS"))*$" {
 
 	for (i = 0; i < n; i++) {
 		value = yield("mvalues "tmp[2]" "n, (i == 0 ? 1 : ""))
-		to_save[i] = make_set($1"="value, _get_set(frame + i))
+		To_save[i] = make_set($1"="value, Get_set(Frame + i))
 	}
-	_save(n, sav1)
+
+	Save(n, sav1, tmp[2])
 
 	next
 }
