@@ -138,7 +138,7 @@ $1 ~ "^("COMPONENTS")(=("COMPONENTS"))*$" {
 	next
 }
 
-$1 == "_CXYNXY" {
+$1 == "ORIGIN" {
 	sav3 = $3
 
 	$0 = "X=NEWX \"constant "$2"\""
@@ -149,7 +149,7 @@ $1 == "_CXYNXY" {
 	next
 }
 
-$1 == "_CXY" {
+$1 == "CENTER" {
 	sav3 = $3
 
 	$0 = "X \"constant "$2"\""
@@ -160,7 +160,7 @@ $1 == "_CXY" {
 	next
 }
 
-$1 == "_CNXY" {
+$1 == "MOVETO" {
 	sav3 = $3
 
 	$0 = "NEWX \"constant "$2"\""
