@@ -13,6 +13,7 @@ BEGIN {
 	Frame = 1
 }
 
+
 function yield (command, restart) {
 	if (restart != "")
 		close(command)
@@ -21,6 +22,7 @@ function yield (command, restart) {
 
 	return result
 }
+
 
 function Save (len_to_save, components, command) {
 	tmp_file = Path".tmp"
@@ -38,9 +40,11 @@ function Save (len_to_save, components, command) {
 	print Item", "components", "command", frames "Frame" to "(Frame + len_to_save - 1)
 }
 
+
 function Get_set (line_number) {
 	return yield("awk -v OFS=\x27\t\x27 \x27NR == "line_number"\x27 "Path, 1)
 }
+
 
 function make_set (changes, from) {
 	if (from == "")
@@ -48,6 +52,7 @@ function make_set (changes, from) {
 
 	return yield("echo \""from"\" | awk -v OFS=\x27\t\x27 \x27{"changes"; print $0}\x27", 1)
 }
+
 
 function percent_to_frame (percent) {
 	gsub(/[^0-9.-]/, "", percent)
@@ -60,6 +65,7 @@ function percent_to_frame (percent) {
 
 	return int(TOTAL_FRAMES * percent/100) + 1
 }
+
 
 function Process_components () {
 	if (Item == "") {
@@ -89,24 +95,31 @@ function Process_components () {
 	Save(n, sav1, tmp[2])
 }
 
+
 /^[[:space:]]*$/ || «substr»($1, 1, 1) == "#" {
 	next
 }
+
 
 {
 	for (alias in Aliases)
 		gsub(alias, Aliases[alias], $0)
 }
 
+
 $1 == "ALIAS" {
 	Aliases[$2] = $3
+
 	next
 }
 
+
 $1 == "AT" {
 	Frame = percent_to_frame($2)
+
 	next
 }
+
 
 $1 == "ITEM" {
 	Item = $2
@@ -124,6 +137,7 @@ $1 == "ITEM" {
 	next
 }
 
+
 $1 == "STACK" {
 	$1 = ""
 	gsub("[[:space:]]+", ",", $0)
@@ -133,10 +147,13 @@ $1 == "STACK" {
 	next
 }
 
+
 $1 ~ "^("COMPONENTS")(=("COMPONENTS"))*$" {
 	Process_components()
+
 	next
 }
+
 
 $1 == "ORIGIN" {
 	sav3 = $3
@@ -149,6 +166,7 @@ $1 == "ORIGIN" {
 	next
 }
 
+
 $1 == "CENTER" {
 	sav3 = $3
 
@@ -160,6 +178,7 @@ $1 == "CENTER" {
 	next
 }
 
+
 $1 == "MOVETO" {
 	sav3 = $3
 
@@ -170,6 +189,7 @@ $1 == "MOVETO" {
 
 	next
 }
+
 
 {
 	print "line "NR": warning: \""$1"\": unknown command or component"
