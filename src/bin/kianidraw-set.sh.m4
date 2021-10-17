@@ -70,6 +70,12 @@ timeline)
 		{
 			cat <<END
 # KAL 0.1
+
+#ALIAS const constant
+#ALIAS lin linear
+ALIAS XX X=NEWX
+ALIAS YY Y=NEWY
+
 END
 		} > $EXTERNAL_TIMELINE
 		echo "$MSG_PREFIX: emptied timeline"
