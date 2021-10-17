@@ -138,7 +138,7 @@ $1 ~ "^("COMPONENTS")(=("COMPONENTS"))*$" {
 	next
 }
 
-$1 == "_RCXY" {
+$1 == "_CXYNXY" {
 	sav3 = $3
 
 	$0 = "X=NEWX \"constant "$2"\""
