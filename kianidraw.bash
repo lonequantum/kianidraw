@@ -72,6 +72,8 @@ kianidraw_completion() {
 			case $sub_arg_no in
 			1)
 				COMPREPLY=($(compgen -W " \
+					stack \
+					stack/all \
 					config/all \
 					$config_list \
 					resources/all \

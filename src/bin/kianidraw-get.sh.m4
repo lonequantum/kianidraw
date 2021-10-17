@@ -9,7 +9,8 @@ is_structure_ok || exit_bad_location "$PROG_NAME"
 
 USAGE="\
 Usage: $PROG_NAME config[/(all|<name>)]
-       $PROG_NAME resources[/(all|<name>)]"
+       $PROG_NAME resources[/(all|<name>)]
+       $PROG_NAME stack[/(all|<frame>)]"
 
 test -n "$1" || exit_bad_args "$USAGE"
 
@@ -56,6 +57,21 @@ resources)
 
 	cd "$name".d 2>/dev/null || exit_error "$MSG_PREFIX: resources/\"$name\": not found"
 	ls -1 *.png 2>/dev/null | sed 's/\.png//'
+	;;
+stack)
+	test -f $INTERNAL_TIMELINE_D/stack \
+	|| exit_error "$MSG_PREFIX: no stack found, please edit/update timeline first"
+
+	case $name in
+	all)
+		cat $INTERNAL_TIMELINE_D/stack | sed 's/\t/: /';;
+	"")
+		awk '{print $1}' $INTERNAL_TIMELINE_D/stack;;
+	[0-9])
+		awk "$1 <= $name {print \$2}" $INTERNAL_TIMELINE_D/stack | tail -n 1;;
+	*)
+		exit_bad_args "$USAGE"
+	esac
 	;;
 *)
 	exit_bad_args "$USAGE"
