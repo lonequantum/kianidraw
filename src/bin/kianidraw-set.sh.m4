@@ -73,8 +73,6 @@ timeline)
 
 #ALIAS const constant
 #ALIAS lin linear
-ALIAS xx X=NEWX
-ALIAS yy Y=NEWY
 
 END
 		} > $EXTERNAL_TIMELINE
