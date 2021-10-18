@@ -12,7 +12,7 @@ add_subcommand() {
 subcommand=""
 while test $# -ge 1; do
 	case $1 in
-	new|import|edit|update|get|set)
+	new|import|edit|update|get|set|make)
 		test -n "$subcommand" && add_subcommand $subcommand
 		subcommand=kianidraw-$1
 		;;

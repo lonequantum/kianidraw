@@ -124,6 +124,7 @@ kianidraw_completion() {
 
 	COMPREPLY=($(compgen -W " \
 		new \
+		make \
 		import \
 		edit \
 		update \
