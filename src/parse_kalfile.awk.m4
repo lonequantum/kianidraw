@@ -59,7 +59,7 @@ function percent_to_frame (percent) {
 	percent = int(percent)
 
 	if (percent < 0 || percent > 100) {
-		print "line "NR": error: "percent": invalid percentage"
+		print "line "NR": error: "percent": invalid percentage" > "/dev/stderr"
 		exit 1
 	}
 
@@ -69,7 +69,7 @@ function percent_to_frame (percent) {
 
 function Process_components () {
 	if (Item == "") {
-		print "line "NR": error: no ITEM defined"
+		print "line "NR": error: no ITEM defined" > "/dev/stderr"
 		exit 1
 	}
 
@@ -77,7 +77,7 @@ function Process_components () {
 	if (tmp[3] !~ "^[[:space:]]*$") {
 		n = percent_to_frame(tmp[3]) - Frame + 1
 		if (n < 1) {
-			print "line "NR": error: cannot define values towards the past"
+			print "line "NR": error: cannot define values towards the past" > "/dev/stderr"
 			exit 1
 		}
 	} else
@@ -192,5 +192,5 @@ $1 == "MOVETO" {
 
 
 {
-	print "line "NR": warning: \""$1"\": unknown command or component"
+	print "line "NR": warning: \""$1"\": unknown command or component" > "/dev/stderr"
 }
