@@ -122,15 +122,15 @@ kianidraw_completion() {
 		((index--))
 	done
 
-	COMPREPLY=($(compgen -W "\
-		new\
-		import\
-		edit\
-		update\
-		get\
-		set\
-		"\
-		"${COMP_WORDS[$COMP_CWORD]}"\
+	COMPREPLY=($(compgen -W " \
+		new \
+		import \
+		edit \
+		update \
+		get \
+		set \
+		" \
+		"${COMP_WORDS[$COMP_CWORD]}" \
 	))
 }
 
