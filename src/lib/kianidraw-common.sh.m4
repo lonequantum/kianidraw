@@ -9,6 +9,9 @@ INTERNAL_TIMELINE_D=.kianidraw/timeline
 INTERNAL_IN_D=.kianidraw/in
 EXTERNAL_IN_D=in
 
+INTERNAL_OUT_D=.kianidraw/out
+EXTERNAL_OUT_D=out
+
 ITEM_NAME_PATTERN='[_a-zA-Z0-9][-_.a-zA-Z0-9]*'
 
 CONFIG_VALUE_PATTERN='[-_.a-zA-Z0-9][-_. a-zA-Z0-9]*'
@@ -74,6 +77,8 @@ is_structure_ok() {
 
 	test -d "$_dir"/$INTERNAL_IN_D       || return 1
 	test -d "$_dir"/$EXTERNAL_IN_D       || return 1
+	test -d "$_dir"/$INTERNAL_OUT_D      || return 1
+	test -d "$_dir"/$EXTERNAL_OUT_D      || return 1
 	test -d "$_dir"/$INTERNAL_TIMELINE_D || return 1
 	test -f "$_dir"/$EXTERNAL_TIMELINE   || return 1
 	test -f "$_dir"/$INTERNAL_CONFIG     || return 1
