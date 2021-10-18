@@ -62,13 +62,18 @@ stack)
 	test -f $INTERNAL_TIMELINE_D/stack \
 	|| exit_error "$MSG_PREFIX: no stack found, please edit/update timeline first"
 
+	expr "$name" : '[0-9]\{1,\}$' >/dev/null && {
+		test $name -gt 0 || exit_error "$MSG_PREFIX: stack/frame cannot be < 1"
+
+		awk "\$1 <= $name {print \$2}" $INTERNAL_TIMELINE_D/stack | tail -n 1
+		exit
+	}
+
 	case $name in
 	all)
 		cat $INTERNAL_TIMELINE_D/stack | sed 's/\t/: /';;
 	"")
 		awk '{print $1}' $INTERNAL_TIMELINE_D/stack;;
-	[0-9])
-		awk "$1 <= $name {print \$2}" $INTERNAL_TIMELINE_D/stack | tail -n 1;;
 	*)
 		exit_bad_args "$USAGE"
 	esac
