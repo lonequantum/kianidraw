@@ -10,7 +10,7 @@ is_structure_ok || exit_bad_location "$PROG_NAME"
 USAGE="\
 Usage: $PROG_NAME config[/(all|<name>)]
        $PROG_NAME resources[/(all|<name>)]
-       $PROG_NAME stack[/(all|<frame>)]"
+       $PROG_NAME stack[/<frame>]"
 
 test -n "$1" || exit_bad_args "$USAGE"
 
@@ -70,10 +70,8 @@ stack)
 	}
 
 	case $name in
-	all)
-		cat $INTERNAL_TIMELINE_D/stack | sed 's/\t/: /';;
 	"")
-		awk '{print $1}' $INTERNAL_TIMELINE_D/stack;;
+		cat $INTERNAL_TIMELINE_D/stack | sed 's/\t/: /';;
 	*)
 		exit_bad_args "$USAGE"
 	esac

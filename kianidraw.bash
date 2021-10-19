@@ -73,7 +73,7 @@ kianidraw_completion() {
 			1)
 				COMPREPLY=($(compgen -W " \
 					stack \
-					stack/all \
+					stack/ \
 					config \
 					config/all \
 					$config_list \
