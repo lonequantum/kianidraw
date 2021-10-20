@@ -1,5 +1,5 @@
 BEGIN {
-	DEFAULT_SET = "0	0	1	1	0	0	0"
+	DEFAULT_SET = "'"$(echo $DEFAULT_SRT_VALUES | sed 's/[ ,]/\t/g')"'"
 	COMP_INDEXES["X"]      = 1
 	COMP_INDEXES["Y"]      = 2
 	COMP_INDEXES["SCALEX"] = 3
