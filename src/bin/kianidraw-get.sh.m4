@@ -85,7 +85,7 @@ timeline)
 
 		__set_frame_from_name_or_die(2)
 
-		values=$(awk "NR == $frame {print \$1\",\"\$2\" \"\$3\",\"\$4\" \"\$5\" \"\$6\",\"\$7}" \
+		values=$(awk "NR == $frame + 1 {print \$1\",\"\$2\" \"\$3\",\"\$4\" \"\$5\" \"\$6\",\"\$7}" \
 		$INTERNAL_TIMELINE_D/$item.srt)
 		test -n "$values" || {
 			echo "$MSG_PREFIX: warning: timeline/$item: no data for frame $frame" >&2

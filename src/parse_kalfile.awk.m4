@@ -26,6 +26,7 @@ function yield (command, restart) {
 
 function Save (len_to_save, components, command) {
 	tmp_file = Path".tmp"
+	Frame++
 
 	system("awk \x27NR < "Frame"\x27 "Path" > "tmp_file)
 
@@ -34,6 +35,7 @@ function Save (len_to_save, components, command) {
 
 	system("awk \x27NR >= "(Frame + len_to_save)"\x27 "Path" >> "tmp_file)
 
+	Frame--
 	close(tmp_file)
 	system("mv -f "tmp_file" "Path)
 
@@ -89,7 +91,7 @@ function Process_components () {
 
 	for (i = 0; i < n; i++) {
 		value = yield("mvalues "tmp[2]" "n, (i == 0 ? 1 : ""))
-		To_save[i] = make_set($1"="value, Get_set(Frame + i))
+		To_save[i] = make_set($1"="value, Get_set(Frame + 1 + i))
 	}
 
 	Save(n, sav1, tmp[2])
@@ -126,8 +128,9 @@ $1 == "ITEM" {
 	Path = $2".srt"
 
 	if (system("test -f "Path) != 0) {
-		system("mkdir -p $(dirname "Path"); > "Path)
+		system("mkdir -p $(dirname "Path")")
 
+		print "X	Y	SCALEX	SCALEY	ANGLE	NEWX	NEWY" > Path
 		for (i = TOTAL_FRAMES; i >= 0; i--)
 			print DEFAULT_SET >> Path
 
