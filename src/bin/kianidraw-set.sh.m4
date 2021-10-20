@@ -9,7 +9,7 @@ is_structure_ok || exit_bad_location "$PROG_NAME"
 
 USAGE="\
 Usage: $PROG_NAME config/<name> <value>|default
-       $PROG_NAME config/all default
+       $PROG_NAME config default
        $PROG_NAME timeline default"
 
 test $# -eq 2 || exit_bad_args "$USAGE"
@@ -28,9 +28,7 @@ delete_config_line() {
 
 case $class in
 config)
-	test -n "$name" || exit_bad_args "$USAGE"
-
-	test X"$name" = Xall && {
+	test -z "$name" && {
 		case $value in
 		default)
 			> $INTERNAL_CONFIG

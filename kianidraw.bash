@@ -50,7 +50,7 @@ kianidraw_completion() {
 			1)
 				COMPREPLY=($(compgen -W " \
 					timeline \
-					config/all \
+					config \
 					$config_list \
 					" \
 					"$current_word" \
