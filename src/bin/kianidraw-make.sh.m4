@@ -84,8 +84,8 @@ while test $frame -le $total_frames; do
 
 	command="( $(make_command $stack)) | convert -layers merge miff:- \"$output\""
 	if __DEV_MODE; then
-		echo
 		echo "$command"
+		echo
 	else
 		printf '\r%d' $frame
 	fi
