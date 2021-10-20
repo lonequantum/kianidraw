@@ -10,7 +10,7 @@ is_structure_ok || exit_bad_location "$PROG_NAME"
 USAGE="\
 Usage: $PROG_NAME config[/(all|<name>)]
        $PROG_NAME resources[/(all|<name>)]
-       $PROG_NAME stack[/<frame>]"
+       $PROG_NAME timeline/stack[@<frame>]"
 
 test -n "$1" || exit_bad_args "$USAGE"
 
@@ -58,20 +58,24 @@ resources)
 	cd "$name".d 2>/dev/null || exit_error "$MSG_PREFIX: resources/\"$name\": not found"
 	ls -1 *.png 2>/dev/null | sed 's/\.png//'
 	;;
-stack)
-	test -f $INTERNAL_TIMELINE_D/stack \
-	|| exit_error "$MSG_PREFIX: no stack found, please edit/update timeline first"
-
-	expr "$name" : '[0-9]\{1,\}$' >/dev/null && {
-		test $name -gt 0 || exit_error "$MSG_PREFIX: stack/frame cannot be < 1"
-
-		awk "\$1 <= $name {print \$2}" $INTERNAL_TIMELINE_D/stack | tail -n 1
-		exit
-	}
+timeline)
+	test -n "$name" || exit_bad_args "$USAGE"
 
 	case $name in
-	"")
+	stack)
+		test -f $INTERNAL_TIMELINE_D/stack \
+		|| exit_error "$MSG_PREFIX: no stack found, please edit/update timeline first"
+
 		cat $INTERNAL_TIMELINE_D/stack | sed 's/\t/: /';;
+	stack@*)
+		kianidraw-get timeline/stack >/dev/null || exit 1
+
+		frame=$(echo "$name" | cut -d@ -f2)
+		expr "$frame" : '[0-9]\{1,\}$' >/dev/null || exit_bad_args "$USAGE"
+		test $frame -gt 0 || exit_error "$MSG_PREFIX: \"$name\": frame cannot be < 1"
+
+		awk "\$1 <= $frame {print \$2}" $INTERNAL_TIMELINE_D/stack | tail -n 1
+		;;
 	*)
 		exit_bad_args "$USAGE"
 	esac

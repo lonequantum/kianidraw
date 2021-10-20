@@ -72,8 +72,8 @@ kianidraw_completion() {
 			case $sub_arg_no in
 			1)
 				COMPREPLY=($(compgen -W " \
-					stack \
-					stack/ \
+					timeline/stack \
+					timeline/stack@ \
 					config \
 					config/all \
 					$config_list \
