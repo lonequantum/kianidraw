@@ -24,4 +24,9 @@ define(__item_name_ok_or_die,
 	«is_item_name_ok "$1" \
 tab($2)«»|| exit_error "$MSG_PREFIX: \"$1\": bad item name"»)
 
+define(__set_frame_from_name_or_die,
+	«frame=$(echo "$name" | cut -d@ -f2)
+tab($1)«»expr "$frame" : '[0-9]\{1,\}$' >/dev/null || exit_bad_args "$USAGE"
+tab($1)«»test $frame -gt 0 || exit_error "$MSG_PREFIX: \"$name\": frame cannot be < 1"»)
+
 divert(0)dnl

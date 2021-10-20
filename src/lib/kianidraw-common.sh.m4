@@ -22,6 +22,8 @@ CONFIG_duration_PATTERN='[1-9][0-9]\{0,1\}'
 CONFIG_final_fps_PATTERN='[1-9][0-9]\{0,1\}'
 CONFIG_testing_fps_PATTERN='[1-9][0-9]\{0,1\}'
 
+DEFAULT_SRT_VALUES="0,0 1,1 0 0,0"
+
 exit_bad_location() {
 	_msg_prefix=$1
 
