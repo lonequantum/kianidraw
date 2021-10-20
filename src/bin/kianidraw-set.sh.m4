@@ -71,6 +71,7 @@ timeline)
 
 #ALIAS const constant
 #ALIAS lin linear
+ALIAS SCALE SCALEX=SCALEY
 
 END
 		} > $EXTERNAL_TIMELINE

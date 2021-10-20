@@ -76,7 +76,7 @@ convert $INTERNAL_IN_D/$item.png -distort SRT '$values' miff:- ; "
 	echo "$_command"
 }
 
-echo "$MSG_PREFIX: building $total_frames frames…"
+echo "$MSG_PREFIX: building $total_frames frames ($work_mode)…"
 frame=1
 while test $frame -le $total_frames; do
 	stack=$(kianidraw-get timeline/stack@$frame)
