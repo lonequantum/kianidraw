@@ -17,7 +17,6 @@ for dir in bin lib etc; do
 done
 
 if $use_bash; then
-	rm -f "$BASH_COMP_DIR"/kianidraw
-	cp kianidraw.bash "$BASH_COMP_DIR"/kianidraw \
-	&& echo $BASH_COMP_DIR/kianidraw
+	cp -f kianidraw.bash "$BASH_COMP_DIR"/kianidraw \
+	&& echo "$BASH_COMP_DIR"/kianidraw
 fi
