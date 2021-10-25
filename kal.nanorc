@@ -1,0 +1,29 @@
+## Syntax highlighting for Kianidraw Animation Language
+
+syntax kal "\.kal$"
+header "^# KAL "
+comment "#"
+
+# Comments
+color italic,latte "(^|[[:space:]]+)#.*"
+
+# Components
+color lightblue "\<(X|Y|SCALE[XY]|ANGLE|NEW[XY])\>"
+
+# Change-values commands
+color lightcyan "\<(ORIGIN|CENTER|MOVETO)\>"
+
+# Declaration commands
+color lightyellow "\<(ALIAS|AT|STACK|ITEM)\>"
+
+# Percentages
+color bold,peach "[0-9]+%"
+
+# Substack brackets
+color lightyellow "[{}]"
+
+# Spaces in front of tabs
+color ,red " +	+"
+
+# Trailing spaces and tabs
+color ,red "[ 	]+$"
